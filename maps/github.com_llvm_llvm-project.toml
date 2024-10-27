@@ -1,0 +1,25 @@
+[settings]
+domain = "github.com"
+owner = "llvm"
+repo = "llvm-project"
+
+[platforms.macos_aarch64]
+name_pattern = "macOS-ARM64.tar.xz"
+strip_prefix = "LLVM-$VERSION-macOS-ARM64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.windows_x86_64]
+name_pattern = "Windows-X64.tar.xz"
+strip_prefix = "LLVM-$VERSION-Windows-X64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.linux_x86_64]
+name_pattern = "Linux-X64.tar.xz"
+strip_prefix = "LLVM-$VERSION-Linux-X64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"

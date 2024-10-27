@@ -1,0 +1,46 @@
+[settings]
+domain = "github.com"
+owner = "cli"
+repo = "cli"
+
+[platforms.macos_aarch64]
+name_pattern = "macOS_arm64.zip"
+strip_prefix = "gh_$VERSION_macOS_arm64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.macos_x86_64]
+name_pattern = "macOS_amd64.zip"
+strip_prefix = "gh_$VERSION_macOS_amd64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.windows_aarch64]
+name_pattern = "windows_arm64.zip"
+strip_prefix = "gh_$VERSION_windows_amd64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.windows_x86_64]
+name_pattern = "windows_amd64.zip"
+strip_prefix = "gh_$VERSION_windows_amd64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.linux_aarch64]
+name_pattern = "linux_arm64.tar.gz"
+strip_prefix = "gh_$VERSION_linux_arm64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.linux_x86_64]
+name_pattern = "linux_amd64.tar.gz"
+strip_prefix = "gh_$VERSION_linux_amd64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"

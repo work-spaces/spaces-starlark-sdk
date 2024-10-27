@@ -1,0 +1,39 @@
+[settings]
+domain = "github.com"
+owner = "protocolbuffers"
+repo = "protobuf"
+
+[platforms.macos_aarch64]
+name_pattern = "osx-aarch_64.zip"
+strip_prefix = "protoc-$VERSION-osx-aarch_64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.macos_x86_64]
+name_pattern = "osx-x86_64.zip"
+strip_prefix = "protoc-$VERSION-osx-x86_64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.windows_x86_64]
+name_pattern = "win64.zip"
+strip_prefix = "protoc-$VERSION-win64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.linux_aarch64]
+name_pattern = "linux-aarch_64.zip"
+strip_prefix = "protoc-$VERSION-linux-aarch_64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
+
+[platforms.linux_x86_64]
+name_pattern = "linux-x86_64.zip"
+strip_prefix = "protoc-$VERSION-linux-x86_64"
+add_prefix = "sysroot"
+includes = "None"
+excludes = "None"
