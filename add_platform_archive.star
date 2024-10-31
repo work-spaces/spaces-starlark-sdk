@@ -54,6 +54,11 @@ def run():
         ],
     })
 
+    if gh_view_assets["status"] != 0:
+        script.print(gh_view_assets["stderr"])
+        script.print("Failed to download release {}".format(tag))
+        return
+
     fs.write_string_to_file(path = "tmp/assets.json", content = gh_view_assets["stdout"])
     assets = fs.read_json_to_dict("tmp/assets.json")["assets"]
 
