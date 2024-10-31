@@ -1,0 +1,21 @@
+[settings]
+domain = "github.com"
+owner = "work-spaces"
+repo = "spaces"
+
+[platforms.macos-aarch64]
+name_pattern = "macos-aarch64"
+add_prefix = "sysroot/bin"
+
+[platforms.macos-x86_64]
+name_pattern = "macos-x86_64"
+add_prefix = "sysroot/bin"
+
+
+[platforms.windows-x86_64]
+name_pattern = "windows-x86_64"
+add_prefix = "sysroot/bin"
+
+[platforms.linux-x86_64]
+name_pattern = "linux-x86_64"
+add_prefix = "sysroot/bin"

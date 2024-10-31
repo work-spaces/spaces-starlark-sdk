@@ -69,7 +69,8 @@ def run():
         asset_name = ""
         for asset in assets:
             name = asset["name"]
-            if name.find(platform_info["name_pattern"]) > 0:
+            found = name.find(platform_info["name_pattern"])
+            if found >= 0:
                 asset_url = asset["url"]
                 asset_name = asset["name"]
                 break
@@ -98,21 +99,29 @@ def run():
             return
 
         sha256 = hash.compute_sha256_from_file("tmp/{}".format(asset_name))
-        strip_prefix = platform_info["strip_prefix"].replace("$VERSION", version)
-        add_prefix = platform_info["add_prefix"]
-        includes = platform_info["includes"]
-        excludes = platform_info["excludes"]
 
-        output_platforms = output_platforms | {
-            platform: {
+        platform_output = {
                 "url": asset_url,
                 "sha256": sha256,
-                "strip_prefix": strip_prefix,
-                "add_prefix": add_prefix,
-                "includes": includes,
-                "excludes": excludes,
-            },
+                "link": "Hard",
         }
+        strip_prefix = platform_info.get("strip_prefix")
+        if strip_prefix != None:
+            platform_output = platform_output | { "strip_prefix": strip_prefix.replace("$VERSION", version) }
+
+        add_prefix = platform_info.get("add_prefix")
+        if add_prefix != None:
+            platform_output = platform_output | { "add_prefix": add_prefix }
+
+        includes = platform_info.get("includes")
+        if includes != None:
+            platform_output = platform_output | { "includes": includes }
+
+        excludes = platform_info.get("excludes")
+        if excludes != None:
+            platform_output = platform_output | { "excludes": excludes }
+
+        output_platforms = output_platforms | { platform: platform_output }
 
     header = '"""\nSpaces starlark checkout for {}:{}\n"""\n'.format(repo_url, tag)
 
