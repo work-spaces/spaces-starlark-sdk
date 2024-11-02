@@ -56,7 +56,7 @@ run.add_exec(
         "args": ["install"] + {},
     },
 )
-""".format(rule_name, rule_nme, packages)
+""".format(rule_name, rule_name, packages)
 
     checkout.add_asset(
         rule = {"name": "{}_spaces_star".format(rule_name)},
