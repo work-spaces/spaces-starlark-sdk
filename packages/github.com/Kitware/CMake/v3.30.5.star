@@ -19,6 +19,11 @@ platforms = {
     },
     "macos-aarch64": {
         "add_prefix": "sysroot",
+        "includes": [
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/bin/**",
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/Plugins/**",
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/share/**",
+        ],
         "link": "Hard",
         "sha256": "3d603e507c7579b13518ef752b4ffcf3ed479fba80ee171d7d85da8153e869d0",
         "strip_prefix": "cmake-3.30.5-macos-universal/CMake.app/Contents/",
@@ -26,6 +31,11 @@ platforms = {
     },
     "macos-x86_64": {
         "add_prefix": "sysroot",
+        "includes": [
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/bin/**",
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/Plugins/**",
+            "cmake-3.30.5-macos-universal/CMake.app/Contents/share/**",
+        ],
         "link": "Hard",
         "sha256": "3d603e507c7579b13518ef752b4ffcf3ed479fba80ee171d7d85da8153e869d0",
         "strip_prefix": "cmake-3.30.5-macos-universal/CMake.app/Contents/",

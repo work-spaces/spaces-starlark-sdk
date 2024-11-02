@@ -132,7 +132,11 @@ def add_gh_platform_archive(name, tag):
 
         includes = platform_info.get("includes")
         if includes != None:
-            platform_output = platform_output | { "includes": includes }
+            updated_includes = []
+            for include in includes:
+                update_include = include.replace("$VERSION", version)
+                updated_includes.append(update_include)
+            platform_output = platform_output | { "includes": updated_includes }
 
         excludes = platform_info.get("excludes")
         if excludes != None:
