@@ -137,10 +137,9 @@ def add_platform_archive(map_file, tag, version):
 def add_platform_archive(): 
     checkout.add_platform_archive(
         rule = {{"name": "{}"}},
-        platforms = 
-            {},
+        platforms = {},
     )
-    """.format(header, package_base_name, output_platforms)
+    """.format(header, package_base_name, json.to_string_pretty(output_platforms))
 
     fs.write_string_to_file(path = package_path, content = starlark)
 

@@ -6,20 +6,20 @@ tag_prefix = "llvmorg-"
 
 [platforms.macos-aarch64]
 name_pattern = "macOS-ARM64.tar.xz"
-strip_prefix = "LLVM-$VERSION-macOS-ARM64.tar.xz"
+strip_prefix = "LLVM-$VERSION-macOS-ARM64"
 add_prefix = "sysroot"
 
 [platforms.macos-x86_64]
-name_pattern = "macOS-ARM64.tar.xz"
-strip_prefix = "LLVM-$VERSION-macOS-X64.tar.xz"
+name_pattern = "macOS-X64.tar.xz"
+strip_prefix = "LLVM-$VERSION-macOS-X64"
 add_prefix = "sysroot"
 
 [platforms.windows-x86_64]
 name_pattern = "Windows-X64.tar.xz"
-strip_prefix = "LLVM-$VERSION-Windows-X64.tar.xz"
+strip_prefix = "LLVM-$VERSION-Windows-X64"
 add_prefix = "sysroot"
 
 [platforms.linux-x86_64]
 name_pattern = "Linux-X64.tar.xz"
-strip_prefix = "LLVM-$VERSION-Linux-X64.tar.xz"
+strip_prefix = "LLVM-$VERSION-Linux-X64"
 add_prefix = "sysroot"
