@@ -26,7 +26,8 @@ def add_platform_archive(map_file, tag, version):
         repo,
     )
 
-    package_name = "{}_{}_{}_{}.star".format(domain, owner, repo, tag)
+    package_base_name = "{}_{}_{}_{}".format(domain, owner, repo, tag)
+    package_name = "{}.star".format(package_base_name)
     package_path = "packages/{}".format(package_name)
 
     if fs.exists(package_path):
@@ -135,11 +136,11 @@ def add_platform_archive(map_file, tag, version):
 {}
 def add_platform_archive(): 
     checkout.add_platform_archive(
-        rule = {{"name": "add_platform_archive"}},
+        rule = {{"name": "{}"}},
         platforms = 
             {},
     )
-    """.format(header, output_platforms)
+    """.format(header, package_base_name, output_platforms)
 
     fs.write_string_to_file(path = package_path, content = starlark)
 
