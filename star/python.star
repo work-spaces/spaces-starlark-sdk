@@ -42,7 +42,7 @@ def add_python(rule_name, platforms, packages = []):
     run_rules = """
 venv_exists = fs.exists("./venv")
 run.add_exec(
-    rule = {"name": "{}_venv".format(rule_name), "type": "Setup"},
+    rule = {"name": "{}_venv", "type": "Setup"},
     exec = {
         "command": "sysroot/python/bin/python3",
         "args": ["-m", "venv", "./venv"] if not venv_exists else ["--version"],
@@ -50,13 +50,13 @@ run.add_exec(
 )
 
 run.add_exec(
-    rule = {"name": "{}_packages".format(rule_name), "type": "Setup", "deps": ["sysroot-python:venv"]},
+    rule = {"name": "{}_packages", "type": "Setup", "deps": ["sysroot-python:venv"]},
     exec = {
         "command": "pip3",
-        "args": ["install"] + packages,
+        "args": ["install"] + {},
     },
 )
-"""
+""".format(rule_name, rule_nme, packages)
 
     checkout.add_asset(
         rule = {"name": "{}_spaces_star".format(rule_name)},
