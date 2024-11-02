@@ -28,6 +28,7 @@ platforms = {
         "add_prefix": "sysroot",
         "link": "Hard",
         "sha256": "d44c5d0dacd23341293f18a17486a93392a29ef702efa468fa3636a01637fe95",
+        "strip_prefix": "gh_2.60.1_macOS_amd4",
         "url": "https://github.com/cli/cli/releases/download/v2.60.1/gh_2.60.1_macOS_amd64.zip",
     },
     "windows-aarch64": {

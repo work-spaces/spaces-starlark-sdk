@@ -19,6 +19,7 @@ def add_gh_platform_archive(name, tag):
     domain = map["settings"]["domain"]
     owner = map["settings"]["owner"]
     repo = map["settings"]["repo"]
+    settings_add_prefix = map["settings"].get("add_prefix", "sysroot")
     tag_prefix = map["settings"].get("tag_prefix", "v")
     platforms = map["platforms"]
     version = tag.replace(tag_prefix, "")
@@ -129,6 +130,8 @@ def add_gh_platform_archive(name, tag):
         add_prefix = platform_info.get("add_prefix")
         if add_prefix != None:
             platform_output = platform_output | { "add_prefix": add_prefix }
+        else:
+            platform_output = platform_output | { "add_prefix": settings_add_prefix }
 
         includes = platform_info.get("includes")
         if includes != None:
