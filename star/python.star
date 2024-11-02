@@ -50,13 +50,13 @@ run.add_exec(
 )
 
 run.add_exec(
-    rule = {{"name": "{}_packages", "type": "Setup", "deps": ["sysroot-python:venv"]}},
+    rule = {{"name": "{}_packages", "type": "Setup", "deps": ["{}_venv"]}},
     exec = {{
         "command": "pip3",
         "args": ["install"] + {},
     }},
 )
-""".format(rule_name, rule_name, packages)
+""".format(rule_name, rule_name, rule_name, packages)
 
     checkout.add_asset(
         rule = {"name": "{}_spaces_star".format(rule_name)},
