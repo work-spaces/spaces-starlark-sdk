@@ -1,0 +1,34 @@
+[settings]
+domain = "github.com"
+owner = "Kitware"
+repo = "CMake"
+
+[platforms.macos-aarch64]
+name_pattern = "macos-universal.tar.gz"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-macos-universal/CMake.app/Contents/"
+
+[platforms.macos-x86_64]
+name_pattern = "macos-universal.tar.gz"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-macos-universal/CMake.app/Contents/"
+
+[platforms.windows-aarch64]
+name_pattern = "windows-arm64.zip"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-windows-aarch64"
+
+[platforms.windows-x86_64]
+name_pattern = "windows-x86_64.zip"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-windows-x86_64"
+
+[platforms.linux-aarch64]
+name_pattern = "linux-aarch64.tar.gz"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-linux-aarch64"
+
+[platforms.linux-x86_64]
+name_pattern = "linux-x86_64.tar.gz"
+add_prefix = "sysroot"
+strip_prefix = "cmake-$VERSION-linux-x86_64"

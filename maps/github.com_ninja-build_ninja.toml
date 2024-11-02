@@ -1,0 +1,28 @@
+[settings]
+domain = "github.com"
+owner = "ninja-build"
+repo = "ninja"
+
+[platforms.macos-aarch64]
+name_pattern = "mac.zip"
+add_prefix = "sysroot/bin"
+
+[platforms.macos-x86_64]
+name_pattern = "mac.zip"
+add_prefix = "sysroot/bin"
+
+[platforms.windows-aarch64]
+name_pattern = "winarm64.zip"
+add_prefix = "sysroot/bin"
+
+[platforms.windows-x86_64]
+name_pattern = "ninja-win.zip"
+add_prefix = "sysroot/bin"
+
+[platforms.linux-aarch64]
+name_pattern = "linux-aarch64.zip"
+add_prefix = "sysroot/bin"
+
+[platforms.linux-x86_64]
+name_pattern = "linux.zip"
+add_prefix = "sysroot/bin"
