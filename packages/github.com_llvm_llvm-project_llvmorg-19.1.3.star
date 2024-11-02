@@ -4,6 +4,7 @@ Spaces starlark checkout for https://github.com/llvm/llvm-project:llvmorg-19.1.3
 """
 
 def add_platform_archive(): 
+    script.print("Add github.com_llvm_llvm-project_llvmorg-19.1.3")
     checkout.add_platform_archive(
         rule = {"name": "github.com_llvm_llvm-project_llvmorg-19.1.3"},
         platforms = 
