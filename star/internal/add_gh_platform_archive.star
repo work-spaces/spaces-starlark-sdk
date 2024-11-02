@@ -3,22 +3,25 @@ Adds a platform archive to the packages using a maps file, tag and version
 """
 
 
-def add_platform_archive(map_file, tag, version):
+load("star/internal/gh_releases.star", "gh_releases")
+
+def add_gh_platform_archive(name, tag):
     """
     Adds a platform archive to the packages using a maps file.
 
     Args:
-        map_file: The path to the map file.
+        name: name of the github release as owner_repo
         tag: The tag of the release.
-        version: The version of the release.
     """
 
-    map = fs.read_toml_to_dict(map_file)
-    platforms = map["platforms"]
+    map = gh_releases[name]
 
     domain = map["settings"]["domain"]
     owner = map["settings"]["owner"]
     repo = map["settings"]["repo"]
+    tag_prefix = map["settings"].get("tag_prefix", "v")
+    platforms = map["platforms"]
+    version = tag.replace(tag_prefix, "")
 
     repo_url = "https://{}/{}/{}".format(
         domain,
@@ -26,7 +29,6 @@ def add_platform_archive(map_file, tag, version):
         repo,
     )
 
-    rule_name = "{}_{}_{}".format(domain, owner, repo)
     package_directory = "packages/{}/{}/{}".format(domain, owner, repo)
     package_file_path = "{}/{}.star".format(package_directory, tag)
 
@@ -142,12 +144,10 @@ def add_platform_archive(map_file, tag, version):
 
     starlark = """
 {}
-def add_platform_archive(): 
-    checkout.add_platform_archive(
-        rule = {{"name": "{}"}},
-        platforms = {},
-    )
-    """.format(header, rule_name, json.to_string_pretty(output_platforms))
+
+platforms = {}
+
+""".format(header, json.to_string_pretty(output_platforms))
 
     fs.write_string_to_file(path = package_file_path, content = starlark)
 

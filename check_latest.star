@@ -9,25 +9,20 @@ Usage Example:
 
 """
 
-load("star/add_platform_archive.star", "add_platform_archive")
+load("star/internal/gh_releases.star", "gh_releases")
+load("star/internal/add_gh_platform_archive.star", "add_gh_platform_archive")
 
-def _check_latest():
+def check_gh_latest():
     """
-    Checks the latest release for each map file.
+    Checks the latest release for each gh entry
     """
 
-    map_files = fs.read_directory("maps")
+    for release in gh_releases:
 
-    for map_file in map_files:
-        if not map_file.endswith(".toml"):
-            continue
-
-        map = fs.read_toml_to_dict(map_file)
-
+        map = gh_releases[release]
         domain = map["settings"]["domain"]
         owner = map["settings"]["owner"]
         repo = map["settings"]["repo"]
-        tag_prefix= map["settings"].get("tag_prefix", "v")
 
         repo_url = "https://{}/{}/{}".format(
             domain,
@@ -46,14 +41,13 @@ def _check_latest():
         })
 
         if gh_latest["status"] != 0:
-            script.print("Error: Unable to get the latest release for {}.".format(map_file))
+            script.print("Error: Unable to get the latest gh release for {}.".format(release))
             return
 
         latest_tag = json.string_to_dict(gh_latest["stdout"])["tagName"]
-        latest_version = latest_tag.replace(tag_prefix, "")
 
-        script.print("Latest version for {} is {}.".format(map_file, latest_version))
-        add_platform_archive(map_file, latest_tag, latest_version)
+        script.print("Latest tag for gh {} is {}.".format(release, latest_tag))
+        add_gh_platform_archive(release, latest_tag)
         
 
-_check_latest()
+check_gh_latest()
