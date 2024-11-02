@@ -4,7 +4,7 @@ Spaces starlark checkout for https://github.com/llvm/llvm-project:llvmorg-19.1.3
 
 def add_platform_archive():
     checkout.add_platform_archive(
-        rule = {"name": "github.com_llvm_llvm-project_llvmorg-19.1.3"},
+        rule = {"name": "github.com_llvm_llvm-project"},
         platforms = {
             "linux-x86_64": {
                 "add_prefix": "sysroot",

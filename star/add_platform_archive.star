@@ -26,12 +26,12 @@ def add_platform_archive(map_file, tag, version):
         repo,
     )
 
-    package_base_name = "{}_{}_{}_{}".format(domain, owner, repo, tag)
-    package_name = "{}.star".format(package_base_name)
-    package_path = "packages/{}".format(package_name)
+    rule_name = "{}_{}_{}".format(domain, owner, repo)
+    package_directory = "packages/{}/{}/{}".format(domain, owner, repo)
+    package_file_path = "{}/{}.star".format(package_directory, tag)
 
-    if fs.exists(package_path):
-        script.print("Package already exists: {}".format(package_path))
+    if fs.exists(package_file_path):
+        script.print("Package already exists: {}".format(package_file_path))
         return
 
     repo_arg = "--repo={}".format(repo_url)
@@ -41,6 +41,14 @@ def add_platform_archive(map_file, tag, version):
         "args": [
             "-p",
             "tmp",
+        ],
+    })
+
+    process.exec({
+        "command": "mkdir",
+        "args": [
+            "-p",
+            package_directory,
         ],
     })
 
@@ -139,7 +147,7 @@ def add_platform_archive():
         rule = {{"name": "{}"}},
         platforms = {},
     )
-    """.format(header, package_base_name, json.to_string_pretty(output_platforms))
+    """.format(header, rule_name, json.to_string_pretty(output_platforms))
 
-    fs.write_string_to_file(path = package_path, content = starlark)
+    fs.write_string_to_file(path = package_file_path, content = starlark)
 
