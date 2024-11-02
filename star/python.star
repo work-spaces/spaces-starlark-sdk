@@ -22,8 +22,7 @@ def add_python(rule_name, platforms, packages = []):
             "destination": ".vscode/extensions.json",
             "format": "json",
             "value": {
-                "recommendations": ["ms-python.python"],
-                "recommendations": ["ms-python.black-formatter"],
+                "recommendations": ["ms-python.python", "ms-python.black-formatter"],
             },
         },
     )
@@ -39,7 +38,6 @@ def add_python(rule_name, platforms, packages = []):
             },
         },
     )
-
 
     venv_exists = fs.exists("./venv")
     run.add_exec(
