@@ -56,13 +56,13 @@ run.add_exec(
 
     create_venv = """
 run.add_exec(
-    rule = {{"name": "{}_venv", "type": "Setup"}},
+    rule = {{"name": "{}_venv", "type": "Setup", "deps": ["{}_install_python"]}},
     exec = {{
         "command": "uv",
         "args": ["venv", "--python={}"],
     }},
 )
-""".format(rule_name, python_version)
+""".format(rule_name, rule_name, python_version)
 
     install_packages = """
 run.add_exec(
@@ -72,7 +72,7 @@ run.add_exec(
         "args": ["pip", "install"] + {},
     }},
 )
-""".format(rule_name, packages)
+""".format(rule_name, rule_name, packages)
 
     run_rules = """
     {}
