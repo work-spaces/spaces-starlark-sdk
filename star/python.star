@@ -2,18 +2,19 @@
 Add Python to your sysroot.
 """
 
-def add_python(rule_name, platforms, packages = []):
+def add_uv_python(rule_name, uv_platforms, python_version, packages = []):
     """
     Add Python to your sysroot.
 
     Args:
         rule_name (str): The name of the rule.
-        platforms (dict): The binary platform archives
+        uv_platforms (dict): The binary platform archives
+        python_version (str): The version of Python to install
         packages (list): The Python packages to install
     """
     checkout.add_platform_archive(
         rule = {"name": rule_name},
-        platforms = platforms,
+        platforms = uv_platforms,
     )
 
     checkout.update_asset(
@@ -30,11 +31,13 @@ def add_python(rule_name, platforms, packages = []):
     workspace_path = info.get_absolute_path_to_workspace()
 
     checkout.update_env(
-        rule = {"name": "{}_update_env".format(rule_name)},
+        rule = {"name": "{}_update_uv_env".format(rule_name)},
         env = {
-            "paths": ["{}/venv/bin".format(workspace_path)],
             "vars": {
                 "VIRTUAL_ENV": "{}/venv".format(workspace_path),
+                "UV_TOOL_DIR": "{}/uv".format(info.get_path_to_store()),
+                "UV_TOOL_BIN_DIR": "{}/uv/bin".format(info.get_path_to_store()),
+                "UV_PROJECT_ENVIRONMENT": "venv",
             },
         },
     )
@@ -52,7 +55,7 @@ run.add_exec(
 run.add_exec(
     rule = {{"name": "{}_packages", "type": "Setup", "deps": ["{}_venv"]}},
     exec = {{
-        "command": "venv/bin/pip3",
+        "command": "pip",
         "args": ["install"] + {},
     }},
 )
