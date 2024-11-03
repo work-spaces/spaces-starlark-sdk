@@ -69,7 +69,7 @@ run.add_exec(
 """.format(init_permissions)
 
     run_rustup_init = """
-cargo_path = "{}/cargo/bin".format(info.get_path_to_store())
+cargo_path = "{{}}/cargo/bin".format(info.get_path_to_store())
 cargo_exists = fs.exists(cargo_path)
 run.add_exec(
     rule = {{"name": {}, "deps": [init_permissions], "type": "Setup"}},
