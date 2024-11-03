@@ -9,7 +9,7 @@ Usage Example:
 
 """
 
-load("star/internal/add_http_platform_archive.star", "add_http_platform_archive")
+load("star/internal/add-http-platform-archive.star", "add_http_platform_archive")
 
 
 args = script.get_args()

@@ -5,15 +5,15 @@ Checks the latest release for each map file.
 
 Usage Example:
 
-./check_latest.star
+./check-latest.star
 
 """
 
-load("star/internal/gh_releases.star", "gh_releases")
-load("star/internal/add_gh_platform_archive.star", "add_gh_platform_archive")
+load("star/internal/gh-releases.star", "gh_releases")
+load("star/internal/add-gh-platform-archive.star", "add_gh_platform_archive")
 
-load("star/internal/http_releases.star", "http_releases")
-load("star/internal/add_http_platform_archive.star", "add_http_platform_archive")
+load("star/internal/http-releases.star", "http_releases")
+load("star/internal/add-http-platform-archive.star", "add_http_platform_archive")
 
 def check_gh_latest():
     """
