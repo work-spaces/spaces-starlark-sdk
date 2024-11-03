@@ -52,7 +52,7 @@ run.add_exec(
 run.add_exec(
     rule = {{"name": "{}_packages", "type": "Setup", "deps": ["{}_venv"]}},
     exec = {{
-        "command": "pip3",
+        "command": "venv/bin/pip3",
         "args": ["install"] + {},
     }},
 )
