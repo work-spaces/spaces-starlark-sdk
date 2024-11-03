@@ -12,6 +12,9 @@ Usage Example:
 load("star/internal/gh_releases.star", "gh_releases")
 load("star/internal/add_gh_platform_archive.star", "add_gh_platform_archive")
 
+load("star/internal/http_releases.star", "http_releases")
+load("star/internal/add_http_platform_archive.star", "add_http_platform_archive")
+
 def check_gh_latest():
     """
     Checks the latest release for each gh entry
@@ -48,6 +51,20 @@ def check_gh_latest():
 
         script.print("Latest tag for gh {} is {}.".format(release, latest_tag))
         add_gh_platform_archive(release, latest_tag)
-        
+
+
+def check_http_latest():
+    """
+    Checks the latest release for each http entry. New versions must be added manually to http_releases
+    """
+
+    for release in http_releases:
+
+        map = http_releases[release]
+        versions = map["versions"]
+
+        for version in versions:
+            add_http_platform_archive(release, version)
 
 check_gh_latest()
+check_http_latest()
