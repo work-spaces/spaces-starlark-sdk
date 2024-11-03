@@ -53,25 +53,41 @@ def add_rust(rule_name, toolchain_version):
         },
     )
 
-    cargo_exists = fs.exists(cargo_path)
-
     init_permissions = "{}_rustup-init-permissions".format(rule_name)
     rustup_init = "{}_rustup-init".format(rule_name)
     vscode_settings = "{}_vscode_settings".format(rule_name)
 
-    run.add_exec(
-        rule = {"name": init_permissions, "type": "Setup"},
-        exec = {
-            "command": "chmod",
-            "args": ["755", "sysroot/bin/rustup-init"],
-        },
-    )
+    run_init_permissions = """
+run.add_exec(
+    rule = {{"name": {}, "type": "Setup"}},
+    exec = {{
+        "command": "chmod",
+        "args": ["755", "sysroot/bin/rustup-init"],
+    }},
+)
 
-    run.add_exec(
-        rule = {"name": rustup_init, "deps": [init_permissions], "type": "Setup"},
-        exec = {
-            "command": "sysroot/bin/rustup-init",
-            "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
+""".format(init_permissions)
+
+    run_rustup_init = """
+cargo_path = "{}/cargo/bin".format(info.get_path_to_store())
+cargo_exists = fs.exists(cargo_path)
+run.add_exec(
+    rule = {{"name": {}, "deps": [init_permissions], "type": "Setup"}},
+    exec = {{
+        "command": "sysroot/bin/rustup-init",
+        "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
+    }},
+)
+
+""".format(rustup_init)
+
+    run_rules = run_init_permissions + run_rustup_init
+
+    checkout.add_asset(
+        rule = {"name": "{}_spaces_star".format(rule_name)},
+        asset = {
+            "destination": "spaces.star",
+            "content": run_rules,
         },
     )
 
