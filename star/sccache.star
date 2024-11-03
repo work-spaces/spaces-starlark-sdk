@@ -26,9 +26,6 @@ def add_sccache(rule_name, sccache_version):
             "destination": ".cargo/config.toml",
             "format": "toml",
             "value": {
-                "patch": {
-                    printer_url: {"printer": {"path": "./printer"}},
-                },
                 "build": {"rustc-wrapper": "sccache"},
             },
         },
