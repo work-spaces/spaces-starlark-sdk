@@ -33,34 +33,52 @@ def add_uv_python(rule_name, uv_platforms, python_version, packages = []):
     checkout.update_env(
         rule = {"name": "{}_update_uv_env".format(rule_name)},
         env = {
-            "paths": [],
+            "paths": ["{}/venv/bin".format(workspace_path)],
             "vars": {
                 "VIRTUAL_ENV": "{}/venv".format(workspace_path),
                 "UV_TOOL_DIR": "{}/uv".format(info.get_path_to_store()),
                 "UV_TOOL_BIN_DIR": "{}/uv/bin".format(info.get_path_to_store()),
                 "UV_PROJECT_ENVIRONMENT": "venv",
+                "UV_PYTHON_INSTALL_DIR": "{}/uv/python".format(info.get_path_to_store()),
             },
         },
     )
 
-    run_rules = """
-venv_exists = fs.exists("./venv")
+    install_python = """
+run.add_exec(
+    rule = {{"name": "{}_install_python", "type": "Setup"}},
+    exec = {{
+        "command": "uv",
+        "args": ["python", "install", "{}"],
+    }},
+)
+""".format(rule_name, python_version)
+
+    create_venv = """
 run.add_exec(
     rule = {{"name": "{}_venv", "type": "Setup"}},
     exec = {{
-        "command": "sysroot/python/bin/python3",
-        "args": ["-m", "venv", "./venv"] if not venv_exists else ["--version"],
+        "command": "uv",
+        "args": ["venv", "--python={}"],
     }},
 )
+""".format(rule_name, python_version)
 
+    install_packages = """
 run.add_exec(
     rule = {{"name": "{}_packages", "type": "Setup", "deps": ["{}_venv"]}},
     exec = {{
-        "command": "pip",
-        "args": ["install"] + {},
+        "command": "uv",
+        "args": ["pip", "install"] + {},
     }},
 )
-""".format(rule_name, rule_name, rule_name, packages)
+""".format(rule_name, packages)
+
+    run_rules = """
+    {}
+    {}
+    {}
+    """.format(install_python, create_venv, install_packages)
 
     checkout.add_asset(
         rule = {"name": "{}_spaces_star".format(rule_name)},
