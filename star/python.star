@@ -59,7 +59,7 @@ run.add_exec(
     rule = {{"name": "{}_venv", "type": "Setup", "deps": ["{}_install_python"]}},
     exec = {{
         "command": "uv",
-        "args": ["venv", "--python={}"],
+        "args": ["venv", "--python={}", "venv"],
     }},
 )
 """.format(rule_name, rule_name, python_version)
