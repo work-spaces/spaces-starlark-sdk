@@ -86,7 +86,7 @@ run.add_exec(
     checkout.add_asset(
         rule = {"name": "{}_spaces_star".format(rule_name)},
         asset = {
-            "destination": "rust.spaces.star",
+            "destination": "{}.spaces.star".format(rule_name),
             "content": run_rules,
         },
     )
