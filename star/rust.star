@@ -59,7 +59,7 @@ def add_rust(rule_name, toolchain_version):
 
     run_init_permissions = """
 run.add_exec(
-    rule = {{"name": {}, "type": "Setup"}},
+    rule = {{"name": "{}", "type": "Setup"}},
     exec = {{
         "command": "chmod",
         "args": ["755", "sysroot/bin/rustup-init"],
@@ -72,14 +72,14 @@ run.add_exec(
 cargo_path = "{{}}/cargo/bin".format(info.get_path_to_store())
 cargo_exists = fs.exists(cargo_path)
 run.add_exec(
-    rule = {{"name": {}, "deps": [init_permissions], "type": "Setup"}},
+    rule = {{"name": "{}", "deps": ["{}"], "type": "Setup"}},
     exec = {{
         "command": "sysroot/bin/rustup-init",
         "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
     }},
 )
 
-""".format(rustup_init)
+""".format(rustup_init, init_permissions)
 
     run_rules = run_init_permissions + run_rustup_init
 
