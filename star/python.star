@@ -33,7 +33,7 @@ def add_uv_python(rule_name, uv_platforms, python_version, packages = []):
     checkout.update_env(
         rule = {"name": "{}_update_uv_env".format(rule_name)},
         env = {
-            "path": [],
+            "paths": [],
             "vars": {
                 "VIRTUAL_ENV": "{}/venv".format(workspace_path),
                 "UV_TOOL_DIR": "{}/uv".format(info.get_path_to_store()),
