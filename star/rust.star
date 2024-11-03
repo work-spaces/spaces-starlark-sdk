@@ -2,9 +2,13 @@
 Add Rust
 """
 
-def add_rust():
+def add_rust(rule_name, toolchain_version):
     """
     Add the Rust toolchain to your sysroot using rustup in the spaces store
+
+    Args:
+        rule_name (str): The name of the rule to add the Rust toolchain to
+        toolchain_version (str): The version of the Rust toolchain to install
     """
 
     # more binaries https://forge.rust-lang.org/infra/other-installation-methods.html
@@ -42,17 +46,21 @@ def add_rust():
     cargo_home = "{}/cargo".format(store_path)
 
     checkout.update_env(
-        rule = {"name": "rust_env"},
+        rule = {"name": "{}_rust_env".format(rule_name)},
         env = {
-            "vars": {"RUSTUP_HOME": rustup_home, "CARGO_HOME": cargo_home},
+            "vars": {"RUSTUP_HOME": rustup_home, "RUST_TOOLCHAIN": toolchain_version, "CARGO_HOME": cargo_home},
             "paths": [cargo_path],
         },
     )
 
     cargo_exists = fs.exists(cargo_path)
 
+    init_permissions = "{}_rustup-init-permissions".format(rule_name)
+    rustup_init = "{}_rustup-init".format(rule_name)
+    vscode_settings = "{}_vscode_settings".format(rule_name)
+
     run.add_exec(
-        rule = {"name": "rustup-init-permissions", "type": "Setup"},
+        rule = {"name": init_permissions, "type": "Setup"},
         exec = {
             "command": "chmod",
             "args": ["755", "sysroot/bin/rustup-init"],
@@ -60,15 +68,15 @@ def add_rust():
     )
 
     run.add_exec(
-        rule = {"name": "rustup-init", "deps": ["rustup-init-permissions"], "type": "Setup"},
+        rule = {"name": rustup_init, "deps": [init_permissions], "type": "Setup"},
         exec = {
             "command": "sysroot/bin/rustup-init",
-            "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"]
+            "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
         },
     )
 
     checkout.update_asset(
-        rule = {"name": "vscode_settings"},
+        rule = {"name": vscode_settings},
         asset = {
             "destination": ".vscode/settings.json",
             "format": "json",
