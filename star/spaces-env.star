@@ -17,7 +17,7 @@ def spaces_working_env():
             "paths": ["/usr/bin", "/bin"],
             "vars": {
                 "SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
-                "PS1": '"(spaces) $PS1"',
+                "PS1": '(spaces) $PS1',
             },
         },
     )
