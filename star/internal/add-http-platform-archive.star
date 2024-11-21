@@ -51,7 +51,7 @@ def add_http_platform_archive(name, version):
     output_platforms = {}
 
     for platform in platforms:
-        script.print("Processing {}".format(platform))
+        script.print("Processing {}-{}: {}".format(name, version, platform))
 
         platform_info = platforms[platform]
 

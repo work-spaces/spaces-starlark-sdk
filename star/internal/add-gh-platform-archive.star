@@ -78,7 +78,7 @@ def add_gh_platform_archive(name, tag):
     output_platforms = {}
 
     for platform in platforms:
-        script.print("Processing {}".format(platform))
+        script.print("Processing {}-{}: {}".format(name, tag, platform))
 
         platform_info = platforms[platform]
 
