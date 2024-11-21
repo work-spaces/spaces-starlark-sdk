@@ -3,7 +3,7 @@ Adds a platform using HTTP download information.
 """
 
 
-load("star/internal/http_releases.star", "http_releases")
+load("star/internal/http-releases.star", "http_releases")
 
 def add_http_platform_archive(name, version):
     """

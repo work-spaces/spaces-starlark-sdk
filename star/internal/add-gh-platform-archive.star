@@ -3,7 +3,7 @@ Adds a platform archive to the packages using a maps file, tag and version
 """
 
 
-load("star/internal/gh_releases.star", "gh_releases")
+load("star/internal/gh-releases.star", "gh_releases")
 
 def add_gh_platform_archive(name, tag):
     """
