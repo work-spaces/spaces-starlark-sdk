@@ -21,3 +21,11 @@ def spaces_working_env():
             },
         },
     )
+
+    checkout.add_which_asset(
+        rule = {"name": "add_which_spaces"},
+        asset = {
+            "which": "spaces",
+            "destination": "sysroot/bin/spaces",
+        },
+    )
