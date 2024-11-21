@@ -29,6 +29,7 @@ def add_uv_python(rule_name, uv_platforms, python_version, packages = []):
     )
 
     workspace_path = info.get_absolute_path_to_workspace()
+    store_path = info.get_path_to_store()
 
     checkout.update_env(
         rule = {"name": "{}_update_uv_env".format(rule_name)},
@@ -36,10 +37,10 @@ def add_uv_python(rule_name, uv_platforms, python_version, packages = []):
             "paths": ["{}/venv/bin".format(workspace_path)],
             "vars": {
                 "VIRTUAL_ENV": "{}/venv".format(workspace_path),
-                "UV_TOOL_DIR": "{}/uv".format(info.get_path_to_store()),
-                "UV_TOOL_BIN_DIR": "{}/uv/bin".format(info.get_path_to_store()),
+                "UV_TOOL_DIR": "{}/uv".format(store_path),
+                "UV_TOOL_BIN_DIR": "{}/uv/bin".format(store_path),
                 "UV_PROJECT_ENVIRONMENT": "venv",
-                "UV_PYTHON_INSTALL_DIR": "{}/uv/python".format(info.get_path_to_store()),
+                "UV_PYTHON_INSTALL_DIR": "{}/uv/python".format(store_path),
             },
         },
     )
