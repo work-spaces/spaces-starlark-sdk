@@ -2,11 +2,12 @@
 User friendly wrapper functions for the spaces run built-in functions.
 """
 
-def add_exec(
+def run_add_exec(
         rule_name,
         command,
         args = [],
-        env = None,
+        env_vars = {},
+        env_paths = [],
         deps = [],
         working_directory = None):
     """
@@ -17,7 +18,8 @@ def add_exec(
         command (str): The name of the rule.
         args (str): The git repository URL to clone
         deps (str): The branch or commit hash to checkout
-        env (dict): dict with vars and paths
+        env_vars (dict): key value pairs of environment variables
+        env_paths (list): list of paths to add to the PATH environment variable
         working_directory (str): The branch or commit hash to checkout
     """
     run.add_exec(
@@ -26,6 +28,9 @@ def add_exec(
             "command": command,
             "args": args,
             "working_directory": working_directory,
-            "env": env,
+            "env": {
+                "vars": env_vars,
+                "paths": env_paths,
+            },
         },
     )
