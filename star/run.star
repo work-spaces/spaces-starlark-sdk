@@ -21,7 +21,7 @@ def add_exec(
         working_directory (str): The branch or commit hash to checkout
     """
     run.add_exec(
-        rule = {"name": rule_name, deps: deps},
+        rule = {"name": rule_name, "deps": deps},
         exec = {
             "commmand": command,
             "args": args,
