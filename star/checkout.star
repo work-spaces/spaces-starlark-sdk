@@ -6,7 +6,7 @@ def checkout_add_repo(
         rule_name,
         url,
         rev,
-        checkout = "Revision",
+        checkout_type = "Revision",
         clone = "Default"):
     """
     Clones a repository and checks it out at a specific revision.
@@ -15,7 +15,7 @@ def checkout_add_repo(
         rule_name (str): The name of the rule.
         url (str): The git repository URL to clone
         rev (str): The branch or commit hash to checkout
-        checkout (str): Revision | NewBranch
+        checkout_type (str): Revision | NewBranch
         clone (str): Default | Worktree
     """
     checkout.add_repo(
@@ -23,7 +23,7 @@ def checkout_add_repo(
         repo = {
             "url": url,
             "rev": rev,
-            "checkout": checkout,
+            "checkout": checkout_type,
             "clone": clone
         },
     )
