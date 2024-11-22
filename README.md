@@ -20,12 +20,13 @@ load("sysroot-packages/packages/github.com/ninja-build/ninja/v1.12.1.star", ninj
 
 checkout.add_platform_archive(
     rule = {"name": "ninja1"},
-    platforms = ninja1_platforms,
+    platforms = ninja1_platforms
 )
 
 add_cmake(
     rule_name = "cmake3",
-    platforms = cmake3_platforms)
+    platforms = cmake3_platforms
+)
 ```
 
 ## Adding Packages
