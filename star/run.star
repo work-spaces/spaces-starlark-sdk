@@ -23,7 +23,7 @@ def add_exec(
     run.add_exec(
         rule = {"name": rule_name, "deps": deps},
         exec = {
-            "commmand": command,
+            "command": command,
             "args": args,
             "working_directory": working_directory,
             "env": env,
