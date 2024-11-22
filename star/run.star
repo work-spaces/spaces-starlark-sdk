@@ -6,8 +6,7 @@ def run_add_exec(
         rule_name,
         command,
         args = [],
-        env_vars = {},
-        env_paths = [],
+        env = {},
         deps = [],
         working_directory = None):
     """
@@ -18,8 +17,7 @@ def run_add_exec(
         command (str): The name of the rule.
         args (str): The git repository URL to clone
         deps (str): The branch or commit hash to checkout
-        env_vars (dict): key value pairs of environment variables
-        env_paths (list): list of paths to add to the PATH environment variable
+        env (dict): key value pairs of environment variables
         working_directory (str): The branch or commit hash to checkout
     """
     run.add_exec(
@@ -28,9 +26,6 @@ def run_add_exec(
             "command": command,
             "args": args,
             "working_directory": working_directory,
-            "env": {
-                "vars": env_vars,
-                "paths": env_paths,
-            },
+            "env": env,
         },
     )
