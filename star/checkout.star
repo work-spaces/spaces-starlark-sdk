@@ -28,11 +28,34 @@ def checkout_add_repo(
         },
     )
 
+def checkout_add_platform_archive(
+        name,
+        platforms):
+    """
+    Adds a platform archive to the checkout.
+
+    Args:
+        name (str): The name of the rule.
+        platforms (list): List of platforms to add the archive to.
+    """
+    checkout.add_platform_archive(
+        rule = {"name": name},
+        platforms = platforms,
+    )
+
 
 def checkout_update_env(
     name,
     vars = {},
     paths = []):
+    """
+    Updates the environment with the given variables and paths.
+
+    Args:
+        name (str): The name of the rule.
+        vars (dict): Dictionary of environment variables to set.
+        paths (list): List of paths to add to the PATH.
+    """
 
     checkout.update_env(
     rule = {"name": name},
