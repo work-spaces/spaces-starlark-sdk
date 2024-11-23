@@ -27,3 +27,17 @@ def checkout_add_repo(
             "clone": clone
         },
     )
+
+
+def checkout_update_env(
+    name,
+    vars = {},
+    paths = []):
+
+    checkout.update_env(
+    rule = {"name": name},
+    env = {
+        "paths": paths,
+        "vars": vars,
+    },
+)
