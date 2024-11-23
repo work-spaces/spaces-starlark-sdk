@@ -5,6 +5,7 @@ User friendly wrapper functions for the spaces run built-in functions.
 def run_add_exec(
         rule_name,
         command,
+        help = None,
         args = [],
         env = {},
         deps = [],
@@ -16,6 +17,7 @@ def run_add_exec(
     Args:
         rule_name (str): The name of the rule.
         command (str): The name of the rule.
+        help (str): The help message for the rule.
         args (str): The git repository URL to clone
         deps (str): The branch or commit hash to checkout
         env (dict): key value pairs of environment variables
@@ -23,7 +25,7 @@ def run_add_exec(
         platforms (list): The branch or commit hash to checkout
     """
     run.add_exec(
-        rule = {"name": rule_name, "deps": deps, "platforms": platforms},
+        rule = {"name": rule_name, "deps": deps, "platforms": platforms, "help": help},
         exec = {
             "command": command,
             "args": args,
@@ -31,3 +33,21 @@ def run_add_exec(
             "env": env,
         },
     )
+
+
+def run_add_target(
+        name,
+        deps,
+        platforms = None):
+    """
+    Adds a target to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        deps (list): List of dependencies for the target.
+        platforms (list): List of platforms to build the target for (default is all).
+    """
+    run.add_target(
+        rule = {"name": name, "deps": deps, platforms: platforms},
+    )
+

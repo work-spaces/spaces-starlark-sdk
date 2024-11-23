@@ -28,6 +28,118 @@ def checkout_add_repo(
         },
     )
 
+def checkout_add_archive(
+        name,
+        url,
+        sha256,
+        link = "Hard",
+        includes = None,
+        excludes = None,
+        strip_prefix = None,
+        add_prefix = None):
+    """
+    Adds an archive to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        url (str): The URL of the archive to download.
+        sha256 (str): The SHA256 checksum of the archive.
+        link (str): Hard | None
+        includes (list): List of globs to include.
+        excludes (list): List of globs to exclude.
+        strip_prefix (str): Prefix to strip from the archive.
+        add_prefix (str): Prefix to add to the archive.
+    """
+    checkout.add_archive(
+        rule = {"name": name},
+        archive = {
+            "url": url,
+            "sha256": sha256,
+            "link": link,
+            "includes": includes,
+            "excludes": excludes,
+            "strip_prefix": strip_prefix,
+            "add_prefix": add_prefix,
+        },
+    )
+
+def checkout_add_asset(
+        name,
+        content,
+        destination):
+    """
+    Adds an asset to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        content (str): The content of the asset.
+        destination (str): The destination path for the asset.
+    """
+    checkout.add_asset(
+        rule = {"name": name},
+        asset = {
+            "content": content,
+            "destination": destination,
+        },
+    )
+
+def checkout_add_cargo_bin(
+        name,
+        crate,
+        version,
+        bins):
+    """
+    Adds a cargo binary to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        crate (str): The name of the crate.
+        version (str): The version of the crate.
+        bins (list): List of binaries to add.
+    """
+    checkout.add_cargo_bin(
+        rule = {"name": name},
+        cargo_bin = {
+            "crate": crate,
+            "version": version,
+            "bins": bins,
+        },
+    )
+
+def checkout_add_hard_link_asset(
+        name,
+        source,
+        destination):
+    """
+    Adds a hard link asset to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        source (str): The source path of the asset.
+        destination (str): The destination path for the asset.
+    """
+    checkout.add_hard_link_asset(
+        rule = {"name": name},
+        asset = {
+            "source": source,
+            "destination": destination,
+        },
+    )
+
+def checkout_add_target(
+        name,
+        deps):
+    """
+    Adds a target to the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        deps (list): List of dependencies for the target.
+    """
+    checkout.add_target(
+        rule = {"name": name, "deps": deps},
+    )
+
 def checkout_add_platform_archive(
         name,
         platforms):

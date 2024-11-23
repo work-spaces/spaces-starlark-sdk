@@ -30,7 +30,6 @@ def add_http_platform_archive(name, version):
         script.print("Package already exists: {}".format(package_file_path))
         return
 
-
     process.exec({
         "command": "mkdir",
         "args": [
@@ -72,7 +71,7 @@ def add_http_platform_archive(name, version):
         if curl_download["status"] != 0:
             script.print(curl_download["stderr"])
             script.print("Failed to download asset for platform: {}".format(platform))
-            return
+            continue
 
         sha256 = hash.compute_sha256_from_file("tmp/{}".format(asset_name))
 

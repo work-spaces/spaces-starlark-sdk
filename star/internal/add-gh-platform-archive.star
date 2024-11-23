@@ -114,7 +114,7 @@ def add_gh_platform_archive(name, tag):
             script.print(gh_download["stderr"])
             script.print("Used name pattern: {}".format(platform_info["name_pattern"]))
             script.print("Failed to download asset for platform: {}".format(platform))
-            return
+            continue
 
         sha256 = hash.compute_sha256_from_file("tmp/{}".format(asset_name))
 

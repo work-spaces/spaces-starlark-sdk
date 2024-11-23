@@ -66,5 +66,5 @@ def check_http_latest():
         for version in versions:
             add_http_platform_archive(release, version)
 
-#check_gh_latest()
+check_gh_latest()
 check_http_latest()
