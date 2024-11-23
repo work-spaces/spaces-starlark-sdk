@@ -8,7 +8,8 @@ def run_add_exec(
         args = [],
         env = {},
         deps = [],
-        working_directory = None):
+        working_directory = None,
+        platforms = None):
     """
     Adds a command to the run dependency graph
 
@@ -19,9 +20,10 @@ def run_add_exec(
         deps (str): The branch or commit hash to checkout
         env (dict): key value pairs of environment variables
         working_directory (str): The branch or commit hash to checkout
+        platforms (list): The branch or commit hash to checkout
     """
     run.add_exec(
-        rule = {"name": rule_name, "deps": deps},
+        rule = {"name": rule_name, "deps": deps, "platforms": platforms},
         exec = {
             "command": command,
             "args": args,

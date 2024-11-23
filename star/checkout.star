@@ -24,7 +24,7 @@ def checkout_add_repo(
             "url": url,
             "rev": rev,
             "checkout": checkout_type,
-            "clone": clone
+            "clone": clone,
         },
     )
 
@@ -43,11 +43,10 @@ def checkout_add_platform_archive(
         platforms = platforms,
     )
 
-
 def checkout_update_env(
-    name,
-    vars = {},
-    paths = []):
+        name,
+        vars = {},
+        paths = []):
     """
     Updates the environment with the given variables and paths.
 
@@ -58,9 +57,30 @@ def checkout_update_env(
     """
 
     checkout.update_env(
-    rule = {"name": name},
-    env = {
-        "paths": paths,
-        "vars": vars,
-    },
-)
+        rule = {"name": name},
+        env = {
+            "paths": paths,
+            "vars": vars,
+        },
+    )
+
+def checkout_add_which_asset(
+        name,
+        which,
+        destination):
+    """
+    Adds an asset to the destintion based on the which command.
+
+    Args:
+        name (str): The name of the rule.
+        which (str): The name of the asset to add.
+        destination (str): The destination path for the asset.
+    """
+
+    checkout.add_which_asset(
+        rule = {"name": name},
+        asset = {
+            "which": which,
+            "destination": destination,
+        },
+    )
