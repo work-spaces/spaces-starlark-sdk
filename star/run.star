@@ -9,6 +9,7 @@ def run_add_exec(
         args = [],
         env = {},
         deps = [],
+        type = None,
         working_directory = None,
         platforms = None):
     """
@@ -19,13 +20,20 @@ def run_add_exec(
         command (str): The name of the rule.
         help (str): The help message for the rule.
         args (str): The git repository URL to clone
+        type (str): The exec type ("Run"| "Setup" | "Optional")
         deps (str): The branch or commit hash to checkout
         env (dict): key value pairs of environment variables
         working_directory (str): The branch or commit hash to checkout
         platforms (list): The branch or commit hash to checkout
     """
     run.add_exec(
-        rule = {"name": rule_name, "deps": deps, "platforms": platforms, "help": help},
+        rule = {
+            "name": rule_name,
+            "deps": deps,
+            "platforms": platforms,
+            "help": help,
+            "type": type,
+        },
         exec = {
             "command": command,
             "args": args,
@@ -33,7 +41,6 @@ def run_add_exec(
             "env": env,
         },
     )
-
 
 def run_add_target(
         name,
@@ -50,4 +57,3 @@ def run_add_target(
     run.add_target(
         rule = {"name": name, "deps": deps, platforms: platforms},
     )
-
