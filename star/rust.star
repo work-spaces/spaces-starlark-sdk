@@ -64,11 +64,9 @@ def add_rust(rule_name, toolchain_version):
     vscode_settings = "{}_vscode_settings".format(rule_name)
 
     run_add_exec(
-        rule = {"name": "{}".format(init_permissions), "type": "Setup"},
-        exec = {
-            "command": "chmod",
-            "args": ["755", "sysroot/bin/rustup-init"],
-        },
+        "{}".format(init_permissions), type = "Setup",
+        commad = "chmod",
+        args = ["755", "sysroot/bin/rustup-init"],
     )
 
     cargo_path = "{}/cargo/bin".format(info.get_path_to_store())
