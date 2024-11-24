@@ -234,7 +234,7 @@ def update_platforms_prefix(
     """
 
     updated_platforms = {}
-    available_platforms = info.get_platforms()
+    available_platforms = info.get_supported_platforms()
     for platform in available_platforms:
         if platforms.get(platform):
             updated_platforms[platform] = platforms[platform] | {"add_prefix": add_prefix}
