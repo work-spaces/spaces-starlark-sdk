@@ -346,28 +346,24 @@ gh_releases = {
             "domain": "github.com",
             "owner": "work-spaces",
             "repo": "tools",
-            "add_prefix": "sysroot"
+            "add_prefix": "sysroot",
+            "tag_prefix": "qmeu-v",  
         },
         "platforms": {
             "macos-aarch64": {
                 "name_pattern": "macos-aarch64.tar.xz",
-                "strip_prefix": "$VERSION-macos-aarch64",
             },
             "macos-x86_64": {
                 "name_pattern": "macos-x86_64.tar.xz",
-                "strip_prefix": "$VERSION-macos-x86_64",
             },
             "windows-x86_64": {
                 "name_pattern": "windows-x86_64.tar.xz",
-                "strip_prefix": "$VERSION-windows-x86_64",
             },
             "linux-aarch64": {
                 "name_pattern": "linux-aarch64.tar.xz",
-                "strip_prefix": "$VERSION-linux-aarch64",
             },
             "linux-x86_64": {
                 "name_pattern": "linux-x86_64.tar.xz",
-                "strip_prefix": "$VERSION-linux-x86_64",
             },
         },
     },

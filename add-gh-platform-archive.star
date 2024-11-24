@@ -16,4 +16,4 @@ args = script.get_args()
 name = args["named"]["--name"]
 tag = args["named"]["--tag"]
 
-add_gh_platform_archive(name, tag, version)
+add_gh_platform_archive(name, tag)
