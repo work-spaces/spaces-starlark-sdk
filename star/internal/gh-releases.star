@@ -371,4 +371,30 @@ gh_releases = {
             },
         },
     },
+    "xpack-dev-tools_pkg-config-xpack": {
+        "settings": {
+            "domain": "github.com",
+            "owner": "xpack-dev-tools",
+            "repo": "pkg-config-xpack",
+            "add_prefix": "sysroot"
+        },
+        "platforms": {
+            "macos-aarch64": {
+                "name_pattern": "darwin-arm64.tar.gz",
+                "strip_prefix": "xpack-pkg-config-$VERSION",
+            },
+            "macos-x86_64": {
+                "name_pattern": "darwin-x64.tar.gz",
+                "strip_prefix": "xpack-pkg-config-$VERSION",
+            },
+            "linux-aarch64": {
+                "name_pattern": "linux-arm64.tar.gz",
+                "strip_prefix": "xpack-pkg-config-$VERSION",
+            },
+            "linux-x86_64": {
+                "name_pattern": "linux-x64.tar.gz",
+                "strip_prefix": "xpack-pkg-config-$VERSION",
+            },
+        },
+    },
 }
