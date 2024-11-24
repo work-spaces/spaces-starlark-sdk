@@ -9,7 +9,7 @@ def run_add_exec(
         args = [],
         env = {},
         deps = [],
-        type = None,
+        type = "Run",
         working_directory = None,
         platforms = None):
     """
