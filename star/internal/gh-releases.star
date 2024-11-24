@@ -240,19 +240,19 @@ gh_releases = {
         } | sysroot_bin,
         "platforms": {
             "macos-aarch64": {
-                "name_pattern": "macos.v0.4.3.tar.gz",
+                "name_pattern": "macos.$VERSION.tar.gz",
             },
             "macos-x86_64": {
-                "name_pattern": "macos.v0.4.3.tar.gz",
+                "name_pattern": "macos.$VERSION.tar.gz",
             },
             "windows-x86_64": {
-                "name_pattern": "windows.v0.4.3.tar.gz",
+                "name_pattern": "windows.$VERSION.tar.gz",
             },
             "linux-aarch64": {
-                "name_pattern": "linux-musl.arm64.v0.4.3.tar.gz",
+                "name_pattern": "linux-musl.arm64.$VERSION.tar.gz",
             },
             "linux-x86_64": {
-                "name_pattern": "linux-musl.x86_64.v0.4.3.tar.gz",
+                "name_pattern": "linux-musl.x86_64.$VERSION.tar.gz",
             },
         },
     },
