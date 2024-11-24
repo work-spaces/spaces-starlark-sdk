@@ -4,9 +4,9 @@ Add Rust
 
 load(
     "checkout.star",
+    "checkout_add_platform_archive",
     "checkout_update_asset",
     "checkout_update_env",
-    "checkout_add_platform_archive",
 )
 load("run.star", "run_add_exec")
 
@@ -64,8 +64,9 @@ def add_rust(rule_name, toolchain_version):
     vscode_settings = "{}_vscode_settings".format(rule_name)
 
     run_add_exec(
-        "{}".format(init_permissions), type = "Setup",
-        commad = "chmod",
+        "{}".format(init_permissions),
+        type = "Setup",
+        command = "chmod",
         args = ["755", "sysroot/bin/rustup-init"],
     )
 
