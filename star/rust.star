@@ -2,6 +2,14 @@
 Add Rust
 """
 
+load(
+    "checkout.star",
+    "checkout_update_asset",
+    "checkout_update_env",
+    "checkout_add_platform_archive",
+)
+load("run.star", "run_add_exec")
+
 def add_rust(rule_name, toolchain_version):
     """
     Add the Rust toolchain to your sysroot using rustup in the spaces store
@@ -30,8 +38,8 @@ def add_rust(rule_name, toolchain_version):
         "sha256": "193d6c727e18734edbf7303180657e96e9d5a08432002b4e6c5bbe77c60cb3e8",
     }
 
-    checkout.add_platform_archive(
-        rule = {"name": "rustup-init-archive"},
+    checkout_add_platform_archive(
+        "rustup-init-archive",
         platforms = {
             "macos-x86_64": macos_x86_64,
             "macos-aarch64": macos_x86_64,
@@ -45,77 +53,57 @@ def add_rust(rule_name, toolchain_version):
     rustup_home = "{}/rustup".format(store_path)
     cargo_home = "{}/cargo".format(store_path)
 
-    checkout.update_env(
-        rule = {"name": "{}_rust_env".format(rule_name)},
-        env = {
-            "vars": {"RUSTUP_HOME": rustup_home, "RUST_TOOLCHAIN": toolchain_version, "CARGO_HOME": cargo_home},
-            "paths": [cargo_path],
-        },
+    checkout_update_env(
+        "{}_rust_env".format(rule_name),
+        vars = {"RUSTUP_HOME": rustup_home, "RUST_TOOLCHAIN": toolchain_version, "CARGO_HOME": cargo_home},
+        paths = [cargo_path],
     )
 
     init_permissions = "{}_rustup-init-permissions".format(rule_name)
     rustup_init = "{}_rustup-init".format(rule_name)
     vscode_settings = "{}_vscode_settings".format(rule_name)
 
-    run_init_permissions = """
-run.add_exec(
-    rule = {{"name": "{}", "type": "Setup"}},
-    exec = {{
-        "command": "chmod",
-        "args": ["755", "sysroot/bin/rustup-init"],
-    }},
-)
-
-""".format(init_permissions)
-
-    run_rustup_init = """
-cargo_path = "{{}}/cargo/bin".format(info.get_path_to_store())
-cargo_exists = fs.exists(cargo_path)
-run.add_exec(
-    rule = {{"name": "{}", "deps": ["{}"], "type": "Setup"}},
-    exec = {{
-        "command": "sysroot/bin/rustup-init",
-        "args": ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
-    }},
-)
-
-""".format(rustup_init, init_permissions)
-
-    run_rules = run_init_permissions + run_rustup_init
-
-    checkout.add_asset(
-        rule = {"name": "{}_spaces_star".format(rule_name)},
-        asset = {
-            "destination": "{}.spaces.star".format(rule_name),
-            "content": run_rules,
+    run_add_exec(
+        rule = {"name": "{}".format(init_permissions), "type": "Setup"},
+        exec = {
+            "command": "chmod",
+            "args": ["755", "sysroot/bin/rustup-init"],
         },
     )
 
-    checkout.update_asset(
-        rule = {"name": vscode_settings},
-        asset = {
-            "destination": ".vscode/settings.json",
-            "format": "json",
-            "value": {
-                "rust-analyzer.cargo.buildScripts.invocationStrategy": "once",
-                "rust-analyzer.cargo.buildScripts.invocationLocation": "root",
-                "rust-analyzer.cargo.buildScripts.overrideCommand": [
-                    "cargo",
-                    "check",
-                    "--quiet",
-                    "--message-format=json",
-                    "--all-targets",
-                    "--keep-going",
-                ],
-                "rust-analyzer.cargo.targetDir": "target-rust-analyzer",
-                "rust-analyzer.check.noDefaultFeatures": True,
-                "rust-analyzer.cargo.noDefaultFeatures": True,
-                "rust-analyzer.showUnlinkedFileNotification": False,
-                "rust-analyzer.imports.granularity.enforce": True,
-                "rust-analyzer.imports.granularity.group": "module",
-                "rust-analyzer.cargo.buildScripts.enable": True,
-                "rust-analyzer.procMacro.attributes.enable": False,
-                "rust-analyzer.cargo.extraEnv": {"CARGO_HOME": cargo_home, "RUSTUP_HOME": rustup_home},
-            },
+    cargo_path = "{}/cargo/bin".format(info.get_path_to_store())
+    cargo_exists = fs.exists(cargo_path)
+    run_add_exec(
+        "{}".format(rustup_init),
+        deps = ["{}".format(init_permissions)],
+        type = "Setup",
+        command = "sysroot/bin/rustup-init",
+        args = ["--version"] if cargo_exists else ["--profile=default", "--no-modify-path", "-y"],
+    )
+
+    checkout_update_asset(
+        vscode_settings,
+        destination = ".vscode/settings.json",
+        format = "json",
+        value = {
+            "rust-analyzer.cargo.buildScripts.invocationStrategy": "once",
+            "rust-analyzer.cargo.buildScripts.invocationLocation": "root",
+            "rust-analyzer.cargo.buildScripts.overrideCommand": [
+                "cargo",
+                "check",
+                "--quiet",
+                "--message-format=json",
+                "--all-targets",
+                "--keep-going",
+            ],
+            "rust-analyzer.cargo.targetDir": "target-rust-analyzer",
+            "rust-analyzer.check.noDefaultFeatures": True,
+            "rust-analyzer.cargo.noDefaultFeatures": True,
+            "rust-analyzer.showUnlinkedFileNotification": False,
+            "rust-analyzer.imports.granularity.enforce": True,
+            "rust-analyzer.imports.granularity.group": "module",
+            "rust-analyzer.cargo.buildScripts.enable": True,
+            "rust-analyzer.procMacro.attributes.enable": False,
+            "rust-analyzer.cargo.extraEnv": {"CARGO_HOME": cargo_home, "RUSTUP_HOME": rustup_home},
         },
     )

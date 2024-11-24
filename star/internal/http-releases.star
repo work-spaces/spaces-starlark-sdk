@@ -3,7 +3,7 @@ Information to update http releases
 """
 
 load(
-    "star/internal/arm-developer-gnu.star",
+    "arm-developer-gnu.star",
     arm_developer_gnu_get_platforms = "get_platforms",
     arm_deverloper_gnu_get_settings = "get_settings",
     arm_deverloper_gnu_versions = "versions",

@@ -2,6 +2,8 @@
 Spaces starlark function for archiving and publishing to github using GH
 """
 
+load("run.star", "run_add_exec")
+
 def add_publish_archive(name, input, version, deploy_repo, deps):
     """Creates an archive and publishes it to github.
 
@@ -56,18 +58,18 @@ def add_publish_archive(name, input, version, deploy_repo, deps):
         },
     )
 
-    run.add_exec(
-        rule = {"name": release_rule_name, "deps": [check_release_rule_name], "type": "Optional"},
-        exec = {
-            "command": "gh",
-            "args": [
-                "release",
-                "create",
-                archive_name,
-                "--generate-notes",
-                repo_arg,
-            ],
-        },
+    run_add_exec(
+        release_rule_name,
+        deps = [check_release_rule_name],
+        type = "Optional",
+        command = "gh",
+        args = [
+            "release",
+            "create",
+            archive_name,
+            "--generate-notes",
+            repo_arg,
+        ],
     )
 
     run.add_exec(
