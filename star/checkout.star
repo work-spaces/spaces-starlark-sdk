@@ -218,3 +218,25 @@ def checkout_update_asset(
             "value": value
         }
 )
+
+def update_platforms_prefix(
+    platforms,
+    add_prefix):
+    """
+    Updates the prefix of the platforms.
+
+    Args:
+        platforms (list): List of platforms to update.
+        add_prefix (str): The prefix to set.
+    
+    Returns:
+        An updated list of platforms.
+    """
+
+    updated_platforms = {}
+    available_platforms = info.get_platforms()
+    for platform in available_platforms:
+        if platforms.get(platform):
+            updated_platforms[platform] = platforms[platform] | {"add_prefix": add_prefix}
+    
+    return updated_platforms    
