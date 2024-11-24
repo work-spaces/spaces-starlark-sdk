@@ -4,7 +4,7 @@ Spaces starlark function for archiving and publishing to github using GH
 
 load("run.star", "run_add_exec")
 
-def add_publish_archive(name, input, version, deploy_repo, deps):
+def add_publish_archive(name, input, version, deploy_repo, deps, suffix = "tar.xz"):
     """Creates an archive and publishes it to github.
 
     This can be run on multiple OS's and multiple arch's.
@@ -15,6 +15,7 @@ def add_publish_archive(name, input, version, deploy_repo, deps):
         version: Version to publish
         deploy_repo: The github URL to the repo
         deps: dependencies for the archive
+        suffix: The suffix of the archive file (tar.gz, tar.xz, tar.bz2, zip)
     """
 
     platform = info.get_platform_name()
@@ -24,7 +25,7 @@ def add_publish_archive(name, input, version, deploy_repo, deps):
         "input": input,
         "name": name,
         "version": version,
-        "driver": "tar.xz",
+        "driver": suffix,
         "platform": platform,
     }
 
