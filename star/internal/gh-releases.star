@@ -2,7 +2,7 @@
 List of information for generating platform archives from GitHub releases.
 """
 
-load("xpack-dev-tools.star", "xpack_releases")
+load("xpack-dev-tools-releases.star", "xpack_releases")
 
 sysroot_bin = {"add_prefix": "sysroot/bin"}
 
@@ -349,7 +349,6 @@ gh_releases = xpack_releases | {
             "owner": "work-spaces",
             "repo": "tools",
             "add_prefix": "sysroot",
-            "tag_prefix": "qmeu-v",  
         },
         "platforms": {
             "macos-aarch64": {
