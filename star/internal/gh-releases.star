@@ -2,9 +2,11 @@
 List of information for generating platform archives from GitHub releases.
 """
 
+load("xpack-dev-tools.star", "xpack_releases")
+
 sysroot_bin = {"add_prefix": "sysroot/bin"}
 
-gh_releases = {
+gh_releases = xpack_releases | {
     "cargo-bins_cargo-binstall": {
         "settings": {
             "domain": "github.com",
@@ -364,32 +366,6 @@ gh_releases = {
             },
             "linux-x86_64": {
                 "name_pattern": "linux-x86_64.tar.xz",
-            },
-        },
-    },
-    "xpack-dev-tools_pkg-config-xpack": {
-        "settings": {
-            "domain": "github.com",
-            "owner": "xpack-dev-tools",
-            "repo": "pkg-config-xpack",
-            "add_prefix": "sysroot"
-        },
-        "platforms": {
-            "macos-aarch64": {
-                "name_pattern": "darwin-arm64.tar.gz",
-                "strip_prefix": "xpack-pkg-config-$VERSION",
-            },
-            "macos-x86_64": {
-                "name_pattern": "darwin-x64.tar.gz",
-                "strip_prefix": "xpack-pkg-config-$VERSION",
-            },
-            "linux-aarch64": {
-                "name_pattern": "linux-arm64.tar.gz",
-                "strip_prefix": "xpack-pkg-config-$VERSION",
-            },
-            "linux-x86_64": {
-                "name_pattern": "linux-x64.tar.gz",
-                "strip_prefix": "xpack-pkg-config-$VERSION",
             },
         },
     },
