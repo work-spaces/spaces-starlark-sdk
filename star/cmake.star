@@ -86,7 +86,7 @@ def cmake_add_repo(
         url,
         rev,
         configure_args = [],
-        make_args = [],
+        build_args = [],
         deps = []):
         
     # Download source for GMP
@@ -101,6 +101,6 @@ def cmake_add_repo(
         name,
         source_directory = name,
         configure_args = configure_args,
-        make_args = make_args,
+        build_args = build_args,
         deps = deps,
     )
