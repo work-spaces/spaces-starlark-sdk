@@ -16,6 +16,9 @@ def _update_rpaths(files, install_path, new_base_path):
         return
 
     for file in files:
+        if file.endswith(".a") or file.endswith(".o"):
+            continue
+
         otool_result = process.exec(
             exec = {
                 "command": "otool",
@@ -23,9 +26,9 @@ def _update_rpaths(files, install_path, new_base_path):
             }
         )
         if otool_result["status"] != 0:
-            script.print("Error running otool")
-            script.print(otool_result["stderr"])
+            script.print("Skipping non-binary file: {}".format(file))
             continue
+            
         lines = otool_result["stdout"].splitlines()
         for line in lines:
             line = line.strip()
@@ -39,7 +42,7 @@ def _update_rpaths(files, install_path, new_base_path):
                     }
                 )
                 if install_name_result["status"] != 0:
-                    script.print("Error running install_name_tool for {}".format(file))
+                    script.print("Warning running install_name_tool for {}".format(file))
                     script.print(install_name_result["stderr"])
                     continue
                 script.print("{}: {} -> {}".format(file, change_old, change_new))
@@ -51,5 +54,4 @@ new_path = args["named"]["--new-path"]
 
 files = fs.read_directory(binary_path)
 
-#update_rpaths(files, args["named"]["--install-path"], "@executable_path/..")
 _update_rpaths(files, old_path, new_path)
