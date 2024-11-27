@@ -81,7 +81,6 @@ def cmake_add_build(
         deps = [build_rule_name],
         args = ["--build", working_directory, "--target", "install"],
         help = "CMake install:{}".format(rule_name),
-        working_directory = working_directory,
     )
 
 def cmake_add_repo(
