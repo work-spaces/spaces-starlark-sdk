@@ -368,4 +368,29 @@ gh_releases = xpack_releases | {
             },
         },
     },
+    "jqlang_jq": {
+        "settings": {
+            "domain": "github.com",
+            "owner": "jqlang",
+            "repo": "jq",
+            "add_prefix": "sysroot/bin",
+        },
+        "platforms": {
+            "macos-aarch64": {
+                "name_pattern": "macos-arm64",
+            },
+            "macos-x86_64": {
+                "name_pattern": "macos-amd64",
+            },
+            "windows-x86_64": {
+                "name_pattern": "windows-amd64.exe",
+            },
+            "linux-aarch64": {
+                "name_pattern": "linux-arm64",
+            },
+            "linux-x86_64": {
+                "name_pattern": "linux-amd64",
+            },
+        },
+    },
 }
