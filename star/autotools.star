@@ -46,6 +46,7 @@ def add_autotools_build(
         command = "../../{}/configure".format(directory),
         args = [prefix_arg] + configure_args,
         working_directory = build_dir,
+        help = "Configure {}".format(name),
     )
 
     run_add_exec(
@@ -54,6 +55,7 @@ def add_autotools_build(
         command = "make",
         args = ["-j{}".format(num_cpus)] + make_args,
         working_directory = build_dir,
+        help = "Build {}".format(name),
     )
 
     run_add_exec(
@@ -62,6 +64,7 @@ def add_autotools_build(
         command = "make",
         args = ["install"],
         working_directory = build_dir,
+        help = "Install {}".format(name),
     )
 
 
