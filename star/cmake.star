@@ -33,7 +33,8 @@ def cmake_add_build(
         rule_name,
         source_directory,
         configure_args = [],
-        build_args = []):
+        build_args = [],
+        deps = []):
     """
     Add a CMake project to the build
 
@@ -42,7 +43,7 @@ def cmake_add_build(
         source_directory: The directory of the project
         configure_args: The arguments to pass to the configure script
         build_args: The arguments to pass to the build command
-
+        deps: The dependencies of the project
     """
 
     configure_rule_name = "{}_configure".format(rule_name)
@@ -56,6 +57,7 @@ def cmake_add_build(
     run_add_exec(
         configure_rule_name,
         command = "cmake",
+        deps = deps,
         args = [
             prefix_arg,
             "-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=FALSE",
@@ -68,6 +70,7 @@ def cmake_add_build(
     run_add_exec(
         build_rule_name,
         command = "cmake",
+        deps = [configure_rule_name],
         args = ["--build"] + configure_args,
         help = "CMake build:{}".format(rule_name),
         working_directory = working_directory,
@@ -76,6 +79,7 @@ def cmake_add_build(
     run_add_exec(
         install_rule_name,
         command = "cmake",
+        deps = [build_rule_name],
         args = ["--build"] + configure_args,
         help = "CMake install:{}".format(rule_name),
         working_directory = working_directory,
