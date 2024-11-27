@@ -36,7 +36,7 @@ def checkout_add_archive(
         includes = None,
         excludes = None,
         strip_prefix = None,
-        add_prefix = None):
+        add_prefix = "./"):
     """
     Adds an archive to the workspace.
 

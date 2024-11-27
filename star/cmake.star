@@ -2,6 +2,8 @@
 Add CMake to your sysroot.
 """
 
+load("run.star", "run_add_exec")
+
 def add_cmake(rule_name, platforms):
     """
     Add CMake to your sysroot.
@@ -24,4 +26,78 @@ def add_cmake(rule_name, platforms):
                 "recommendations": ["twxs.cmake"],
             },
         },
+    )
+
+def cmake_add_build(
+        rule_name,
+        configure_args = [],
+        build_args = []):
+    """
+    Add a CMake project to the build
+
+    Args:
+        rule_name: The name of the project
+        configure_args: The arguments to pass to the configure script
+        build_args: The arguments to pass to the build command
+
+    """
+
+    configure_rule_name = "{}_configure".format(rule_name)
+    build_rule_name = "{}_build".format(rule_name)
+    install_rule_name = "{}_install".format(rule_name)
+    workspace = info.get_absolute_path_to_workspace()
+    install_path = "{}/build/install".format(workspace)
+    prefix_arg = "-DCMAKE_INSTALL_PREFIX={}".format(install_path)
+    working_directory = "build/{}".format(rule_name)
+
+    run_add_exec(
+        configure_rule_name,
+        command = "cmake",
+        args = [
+            prefix_arg,
+            "-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=FALSE",
+            "-B{}".format(working_directory),
+        ] + configure_args,
+        help = "CMake Configure:{}".format(rule_name),
+    )
+
+    run_add_exec(
+        build_rule_name,
+        command = "cmake",
+        args = ["--build"] + configure_args,
+        help = "CMake build:{}".format(rule_name),
+        working_directory = working_directory,
+    )
+
+    run_add_exec(
+        install_rule_name,
+        command = "cmake",
+        args = ["--build"] + configure_args,
+        help = "CMake install:{}".format(rule_name),
+        working_directory = working_directory,
+    )
+
+def cmake_add_repo(
+        name,
+        url,
+        rev,
+        directory,
+        configure_args = [],
+        make_args = [],
+        deps = []):
+        
+    # Download source for GMP
+    checkout_add_repo(
+        name,
+        url = url,
+        rev = rev,
+        clone = "Shallow"
+    )
+
+    cmake_add_build(
+        name,
+        directory,
+        configure_args = configure_args,
+        make_args = make_args,
+        deps = deps,
     )

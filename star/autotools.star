@@ -3,16 +3,15 @@ Build an autotools project
 
 """
 
-
+load("checkout.star", "checkout_add_archive", "checkout_add_repo")
 load("run.star", "run_add_exec")
 
-def add_autotools_build(
-    name,
-    directory,
-    configure_args = [],
-    make_args = [],
-    deps = [],
-    ):
+def autotools_add_build(
+        name,
+        directory,
+        configure_args = [],
+        make_args = [],
+        deps = []):
     """
     Add an autotools project to the build
 
@@ -67,5 +66,51 @@ def add_autotools_build(
         help = "Install {}".format(name),
     )
 
+def autotools_add_source_archive(
+        name,
+        url,
+        sha256,
+        directory,
+        configure_args = [],
+        make_args = [],
+        deps = []):
 
+    # Download source for GMP
+    checkout_add_archive(
+        name,
+        url = url,
+        sha256 = sha256,
+    )
 
+    add_autotools_build(
+        name,
+        directory,
+        configure_args = configure_args,
+        make_args = make_args,
+        deps = deps,
+    )
+
+def autotools_add_repo(
+        name,
+        url,
+        rev,
+        directory,
+        configure_args = [],
+        make_args = [],
+        deps = []):
+        
+    # Download source for GMP
+    checkout_add_repo(
+        name,
+        url = url,
+        rev = rev,
+        clone = "Shallow"
+    )
+
+    autotools_add_build(
+        name,
+        directory,
+        configure_args = configure_args,
+        make_args = make_args,
+        deps = deps,
+    )
