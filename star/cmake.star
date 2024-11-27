@@ -2,6 +2,7 @@
 Add CMake to your sysroot.
 """
 
+load("checkout.star", "checkout_add_repo")
 load("run.star", "run_add_exec")
 
 def add_cmake(rule_name, platforms):
