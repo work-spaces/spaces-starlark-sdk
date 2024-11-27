@@ -8,7 +8,7 @@ load("run.star", "run_add_exec")
 
 def autotools_add_build(
         name,
-        directory,
+        source_directory,
         configure_args = [],
         make_args = [],
         deps = []):
@@ -17,7 +17,7 @@ def autotools_add_build(
 
     Args:
         name: The name of the project
-        directory: The directory of the project
+        source_directory: The directory of the project
         configure_args: The arguments to pass to the configure script
         make_args: The arguments to pass to the make command
         deps: The dependencies of the project
@@ -42,7 +42,7 @@ def autotools_add_build(
     run_add_exec(
         configure_rule_name,
         deps = [prepare_rule_name] + deps,
-        command = "../../{}/configure".format(directory),
+        command = "../../{}/configure".format(source_directory),
         args = [prefix_arg] + configure_args,
         working_directory = build_dir,
         help = "Configure {}".format(name),
@@ -70,7 +70,7 @@ def autotools_add_source_archive(
         name,
         url,
         sha256,
-        directory,
+        source_directory,
         configure_args = [],
         make_args = [],
         deps = []):
@@ -82,9 +82,9 @@ def autotools_add_source_archive(
         sha256 = sha256,
     )
 
-    add_autotools_build(
+    autotools_add_build(
         name,
-        directory,
+        source_directory,
         configure_args = configure_args,
         make_args = make_args,
         deps = deps,
@@ -94,7 +94,6 @@ def autotools_add_repo(
         name,
         url,
         rev,
-        directory,
         configure_args = [],
         make_args = [],
         deps = []):
@@ -109,7 +108,7 @@ def autotools_add_repo(
 
     autotools_add_build(
         name,
-        directory,
+        source_directory = name,
         configure_args = configure_args,
         make_args = make_args,
         deps = deps,
