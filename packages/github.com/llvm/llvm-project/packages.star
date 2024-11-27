@@ -5,6 +5,6 @@ load("llvmorg-19.1.4.star", platforms_llvmorg_19_1_4_star = "platforms")
 
 
 packages = {
-    "llvmorg-19.1.3.star": platforms_llvmorg_19_1_3_star,
-    "llvmorg-19.1.4.star": platforms_llvmorg_19_1_4_star,
+    "llvmorg-19.1.3": platforms_llvmorg_19_1_3_star,
+    "llvmorg-19.1.4": platforms_llvmorg_19_1_4_star,
 }

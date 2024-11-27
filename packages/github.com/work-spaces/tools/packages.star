@@ -4,5 +4,5 @@ load("qemu-arm-v7.2.9.star", platforms_qemu_arm_v7_2_9_star = "platforms")
 
 
 packages = {
-    "qemu-arm-v7.2.9.star": platforms_qemu_arm_v7_2_9_star,
+    "qemu-arm-v7.2.9": platforms_qemu_arm_v7_2_9_star,
 }

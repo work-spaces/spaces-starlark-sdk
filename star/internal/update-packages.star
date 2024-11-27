@@ -13,7 +13,8 @@ def _create_platforms_star_content(name, children):
     content += '\n\npackages = {\n'
     for child in children:
         child_variable = _path_to_variable_name(child)
-        content += '    "{}": platforms_{},\n'.format(child, child_variable)
+        strip_star = child.replace(".star", "")
+        content += '    "{}": platforms_{},\n'.format(strip_star, child_variable)
     content += '}\n'
     return content
 

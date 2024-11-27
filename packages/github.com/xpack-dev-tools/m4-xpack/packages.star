@@ -4,5 +4,5 @@ load("v1.4.19-3.star", platforms_v1_4_19_3_star = "platforms")
 
 
 packages = {
-    "v1.4.19-3.star": platforms_v1_4_19_3_star,
+    "v1.4.19-3": platforms_v1_4_19_3_star,
 }

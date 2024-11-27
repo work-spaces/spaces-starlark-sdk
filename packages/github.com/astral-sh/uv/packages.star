@@ -5,6 +5,6 @@ load("0.5.4.star", platforms_0_5_4_star = "platforms")
 
 
 packages = {
-    "0.4.29.star": platforms_0_4_29_star,
-    "0.5.4.star": platforms_0_5_4_star,
+    "0.4.29": platforms_0_4_29_star,
+    "0.5.4": platforms_0_5_4_star,
 }

@@ -6,7 +6,7 @@ load("v1.10.14.star", platforms_v1_10_14_star = "platforms")
 
 
 packages = {
-    "v1.10.10.star": platforms_v1_10_10_star,
-    "v1.10.13.star": platforms_v1_10_13_star,
-    "v1.10.14.star": platforms_v1_10_14_star,
+    "v1.10.10": platforms_v1_10_10_star,
+    "v1.10.13": platforms_v1_10_13_star,
+    "v1.10.14": platforms_v1_10_14_star,
 }

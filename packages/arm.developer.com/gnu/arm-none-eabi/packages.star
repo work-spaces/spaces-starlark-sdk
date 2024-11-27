@@ -8,9 +8,9 @@ load("12.3.rel1.star", platforms_12_3_rel1_star = "platforms")
 
 
 packages = {
-    "13.2.rel1.star": platforms_13_2_rel1_star,
-    "13.3.rel1.star": platforms_13_3_rel1_star,
-    "11.3.rel1.star": platforms_11_3_rel1_star,
-    "12.2.rel1.star": platforms_12_2_rel1_star,
-    "12.3.rel1.star": platforms_12_3_rel1_star,
+    "13.2.rel1": platforms_13_2_rel1_star,
+    "13.3.rel1": platforms_13_3_rel1_star,
+    "11.3.rel1": platforms_11_3_rel1_star,
+    "12.2.rel1": platforms_12_2_rel1_star,
+    "12.3.rel1": platforms_12_3_rel1_star,
 }
