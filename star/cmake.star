@@ -71,16 +71,15 @@ def cmake_add_build(
         build_rule_name,
         command = "cmake",
         deps = [configure_rule_name],
-        args = ["--build"] + configure_args,
+        args = ["--build", working_directory] + build_args,
         help = "CMake build:{}".format(rule_name),
-        working_directory = working_directory,
     )
 
     run_add_exec(
         install_rule_name,
         command = "cmake",
         deps = [build_rule_name],
-        args = ["--build"] + configure_args,
+        args = ["--build", working_directory, "--target", "install"],
         help = "CMake install:{}".format(rule_name),
         working_directory = working_directory,
     )
