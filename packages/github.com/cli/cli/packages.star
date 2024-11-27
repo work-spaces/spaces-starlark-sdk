@@ -1,7 +1,7 @@
 """packages/github.com/cli/cli packages"""
 
-load("v2.60.1.star/packages.star", platforms_v2_60_1_star = "platforms")
-load("v2.62.0.star/packages.star", platforms_v2_62_0_star = "platforms")
+load("v2.60.1.star", platforms_v2_60_1_star = "platforms")
+load("v2.62.0.star", platforms_v2_62_0_star = "platforms")
 
 
 packages = {

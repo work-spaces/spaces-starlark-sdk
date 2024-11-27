@@ -9,7 +9,7 @@ def _create_platforms_star_content(name, children):
     content = '"""{} packages"""\n\n'.format(name)
     for child in children:
         child_variable = _path_to_variable_name(child)
-        content += 'load("{}/packages.star", platforms_{} = "platforms")\n'.format(child, child_variable)
+        content += 'load("{}", platforms_{} = "platforms")\n'.format(child, child_variable)
     content += '\n\npackages = {\n'
     for child in children:
         child_variable = _path_to_variable_name(child)
