@@ -9,6 +9,7 @@ def run_add_exec(
         args = [],
         env = {},
         deps = [],
+        inputs = None,
         type = None,
         working_directory = None,
         platforms = None):
@@ -22,6 +23,7 @@ def run_add_exec(
         args (str): The git repository URL to clone
         type (str): The exec type ("Run"| "Setup" | "Optional")
         deps (str): The branch or commit hash to checkout
+        inputs (list): List of globs to specify the inputs
         env (dict): key value pairs of environment variables
         working_directory (str): The branch or commit hash to checkout
         platforms (list): The branch or commit hash to checkout
@@ -33,6 +35,7 @@ def run_add_exec(
             "platforms": platforms,
             "help": help,
             "type": type,
+            "inputs": inputs,
         },
         exec = {
             "command": command,
