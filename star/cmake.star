@@ -30,6 +30,7 @@ def add_cmake(rule_name, platforms):
 
 def cmake_add_build(
         rule_name,
+        source_directory,
         configure_args = [],
         build_args = []):
     """
@@ -37,6 +38,7 @@ def cmake_add_build(
 
     Args:
         rule_name: The name of the project
+        source_directory: The directory of the project
         configure_args: The arguments to pass to the configure script
         build_args: The arguments to pass to the build command
 
@@ -57,6 +59,7 @@ def cmake_add_build(
             prefix_arg,
             "-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=FALSE",
             "-B{}".format(working_directory),
+            "-S{}".format(source_directory),
         ] + configure_args,
         help = "CMake Configure:{}".format(rule_name),
     )
@@ -81,7 +84,6 @@ def cmake_add_repo(
         name,
         url,
         rev,
-        directory,
         configure_args = [],
         make_args = [],
         deps = []):
@@ -96,7 +98,7 @@ def cmake_add_repo(
 
     cmake_add_build(
         name,
-        directory,
+        source_directory = name,
         configure_args = configure_args,
         make_args = make_args,
         deps = deps,
