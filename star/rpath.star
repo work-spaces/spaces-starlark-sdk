@@ -4,7 +4,7 @@ Update RPATHs for loading shared libraries
 
 load("run.star", "run_add_exec")
 
-def update_macos_rpaths_install_dir(rule_name, install_path, deps):
+def rpath_update_macos_install_dir(rule_name, install_path, deps):
     """
     Update the rpaths of the binaries on macOS.
 
