@@ -65,6 +65,7 @@ def openssl_build(
     run_add_exec(
         install_rule_name,
         deps = [build_rule_name],
+        inputs = ["{}/**".format(build_directory)],
         command = "make",
         args = ["install"],
         working_directory = build_directory,

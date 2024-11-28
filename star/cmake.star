@@ -29,11 +29,12 @@ def add_cmake(rule_name, platforms):
         },
     )
 
-def cmake_add_build(
+def cmake_add_configure_build_install(
         rule_name,
         source_directory,
         configure_args = [],
         build_args = [],
+        build_artifact_globs = [],
         deps = []):
     """
     Add a CMake project to the build
@@ -43,6 +44,7 @@ def cmake_add_build(
         source_directory: The directory of the project
         configure_args: The arguments to pass to the configure script
         build_args: The arguments to pass to the build command
+        build_artifact_globs: The globs to match when installing build artifacts
         deps: The dependencies of the project
     """
 
@@ -58,6 +60,11 @@ def cmake_add_build(
         configure_rule_name,
         command = "cmake",
         deps = deps,
+        inputs = [
+            "+{}/**/CMakeLists.txt".format(source_directory),
+            "+{}/**/*.cmake".format(source_directory),
+            "-{}/.git/**".format(source_directory),
+        ],
         args = [
             prefix_arg,
             "-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=FALSE",
@@ -70,6 +77,7 @@ def cmake_add_build(
     run_add_exec(
         build_rule_name,
         command = "cmake",
+        inputs = ["+{}/**".format(source_directory)],
         deps = [configure_rule_name],
         args = ["--build", working_directory] + build_args,
         help = "CMake build:{}".format(rule_name),
@@ -77,6 +85,7 @@ def cmake_add_build(
 
     run_add_exec(
         install_rule_name,
+        inputs = build_artifact_globs,
         command = "cmake",
         deps = [build_rule_name],
         args = ["--build", working_directory, "--target", "install"],
@@ -89,20 +98,59 @@ def cmake_add_repo(
         rev,
         configure_args = [],
         build_args = [],
+        build_artifact_globs = [],
         deps = []):
-        
-    # Download source for GMP
+
     checkout_add_repo(
         name,
         url = url,
         rev = rev,
-        clone = "Shallow"
+        clone = "Shallow",
     )
 
-    cmake_add_build(
+    cmake_add_configure_build_install(
         name,
         source_directory = name,
         configure_args = configure_args,
         build_args = build_args,
+        build_artifact_globs = build_artifact_globs,
         deps = deps,
+    )
+
+def cmake_add_source_archive(
+        name,
+        url,
+        sha256,
+        source_directory,
+        configure_args = [],
+        make_args = [],
+        build_artifact_globs = [],
+        deps = []):
+    """
+    Add a CMake project to the build
+
+    Args:
+        name: The name of the project
+        url: The URL of the source archive
+        sha256: The SHA256 of the source archive
+        source_directory: The directory of the project
+        configure_args: The arguments to pass to the configure script
+        make_args: The arguments to pass to the build command
+        build_artifact_globs: The globs to match when installing build artifacts
+        deps: The dependencies of the project
+    """
+
+    checkout_add_archive(
+        name,
+        url = url,
+        sha256 = sha256,
+    )
+
+    cmake_add_configure_build_install(
+        name,
+        source_directory,
+        configure_args = configure_args,
+        make_args = make_args,
+        deps = deps,
+        build_artifact_globs = build_artifact_globs,
     )
