@@ -42,6 +42,7 @@ def autotools_add_build(
     run_add_exec(
         configure_rule_name,
         deps = [prepare_rule_name] + deps,
+        inputs = ["{}/configure".format(source_directory)],
         command = "../../{}/configure".format(source_directory),
         args = [prefix_arg] + configure_args,
         working_directory = build_dir,
@@ -51,6 +52,7 @@ def autotools_add_build(
     run_add_exec(
         build_rule_name,
         deps = [configure_rule_name],
+        inputs = ["{}/Makefile".format(build_dir), "{}/**".format(source_directory)],
         command = "make",
         args = ["-j{}".format(num_cpus)] + make_args,
         working_directory = build_dir,
