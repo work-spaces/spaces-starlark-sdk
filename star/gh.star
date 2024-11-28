@@ -32,7 +32,7 @@ def add_publish_archive(name, input, version, deploy_repo, deps, suffix = "tar.x
     archive_output = info.get_path_to_build_archive(rule_name = archive_rule_name, archive = archive_info)
 
     run.add_archive(
-        rule = {"name": archive_rule_name, "deps": deps, "inputs": ["{}/**".format(input)]},
+        rule = {"name": archive_rule_name, "deps": deps},
         archive = archive_info,
     )
 
