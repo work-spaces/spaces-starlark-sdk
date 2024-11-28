@@ -41,6 +41,7 @@ def openssl_build(
     run_add_exec(
         configure_rule_name,
         deps = deps + [prepare_rule_name],
+        inputs = ["{}/Configure".format(source_directory)],
         command = "{}/{}/Configure".format(workspace, source_directory),
         args = [
             "--prefix={}".format(install_path),
@@ -54,6 +55,7 @@ def openssl_build(
     run_add_exec(
         build_rule_name,
         deps = [configure_rule_name],
+        inputs = ["{}/Makefile".format(build_directory), "{}/**".format(source_directory)],
         command = "make",
         args = ["-j{}".format(cpu_count)] + make_args,
         working_directory = build_directory,
