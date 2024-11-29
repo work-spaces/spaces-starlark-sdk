@@ -2,17 +2,19 @@
 Add Bazelisk to your sysroot.
 """
 
-def add_bazelisk(rule_name, platforms):
+load("packages/github.com/bazelbuild/bazelisk/packages.star", packages = "packages")
+
+def add_bazelisk(rule_name, version):
     """
     Add Bazelisk to your sysroot.
 
     Args:
         rule_name (str): The name of the rule.
-        platforms (dict): The platforms to add CMake to.
+        version (str): Bazelisk version from github.com/bazelbuild/bazelisk/releases
     """
     checkout.add_platform_archive(
         rule = {"name": rule_name},
-        platforms = platforms,
+        platforms = packages[version],
     )
 
     platform = info.get_platform_name()

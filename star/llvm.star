@@ -2,33 +2,37 @@
 Add LLVM to your sysroot.
 """
 
-def add_llvm(rule_name, platforms, toolchain_name = "llvm-toolchain.cmake"):
+load("packages/github.com/llvm/llvm_project/packages.star", github_llvm_project_packages = "packages")
+load(
+    "checkout.star",
+    "checkout_add_platform_archive",
+    "checkout_update_env",
+    "checkout_add_asset",
+)
+
+def llvm_add(rule_name, version, toolchain_name = "llvm-toolchain.cmake"):
     """
     Add LLVM to your sysroot.
 
     Args:
         rule_name (str): The name of the rule.
-        platforms (dict): The platforms to add CMake to.
+        version (str): The LLVM version from packages/llvm.org/llvm
         toolchain_name (str): The name of the toolchain file (default is "llvm-toolchain.cmake").
     """
-    checkout.add_platform_archive(
-        rule = {"name": rule_name},
-        platforms = platforms,
+    checkout_add_platform_archive(
+        rule_name,
+        platforms = github_llvm_project_packages[version],
     )
 
-    checkout.update_env(
-        rule = {"name": "{}_update_env".format(rule_name)},
-        env = {
-            "paths": [],
-            "vars": {
-                "SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
-            },
+    checkout_update_env(
+        "{}_update_env".format(rule_name),
+        vars = {
+            "LLVM_SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
         },
     )
 
-
     toolchain_content = """
-set(SYSROOT $ENV{SPACES_WORKSPACE}/sysroot)
+set(SYSROOT $ENV{LLVM_SPACES_WORKSPACE}/sysroot)
 
 set(CMAKE_NO_SYSTEM_FROM_IMPORTED ON CACHE INTERNAL "LLVM don't use isystem")
 set(CMAKE_C_COMPILER ${SYSROOT}/bin/clang CACHE INTERNAL "LLVM TOOLCHAIN C COMPILER")
@@ -46,10 +50,8 @@ set(CMAKE_MODULE_LINKER_FLAGS_INIT "-fuse-ld=lld")
 set(CMAKE_SHARED_LINKER_FLAGS_INIT "-fuse-ld=lld")
 """
 
-    checkout.add_asset(
-        rule = {"name": "{}_toolchain".format(rule_name)},
-        asset = {
-            "destination": toolchain_name,
-            "content": toolchain_content,
-        },
+    checkout_add_asset(
+        "{}_toolchain".format(rule_name),
+        destination = toolchain_name,
+        content = toolchain_content,
     )

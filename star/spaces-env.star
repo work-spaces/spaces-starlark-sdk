@@ -14,17 +14,9 @@ def spaces_working_env():
     """
     checkout_update_env(
         "spaces_starlark_sdk_spaces_working_env",
-        paths = ["/usr/bin", "/bin"],
+        system_paths = ["/usr/bin", "/bin"],
         vars = {
             "SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
             "PS1": "(spaces) $PS1",
         },
     )
-
-    #checkout.add_which_asset(
-    #    rule = {"name": "add_which_spaces"},
-    #    asset = {
-    #        "which": "spaces",
-    #        "destination": "sysroot/bin/spaces",
-    #    },
-    #)

@@ -2,6 +2,14 @@
 Add arm-none-eabi toolchain to your sysroot.
 """
 
+load(
+    "checkout.star",
+    "checkout_add_asset",
+    "checkout_add_platform_archive",
+    "checkout_update_env",
+)
+load("packages/arm.developer.com/gnu/arm-none-eabi/packages.star", "packages")
+
 _toolchain_contents = """
 set(SYSROOT $ENV{SPACES_WORKSPACE}/sysroot)
 
@@ -76,35 +84,28 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -fno-unwind-tables -fno-rtti" CACHE INTERNAL "CMAKE CXX FLAGS")
 """
 
-def add_arm_none_eabi(rule_name, platforms):
+def arm_gnu_add_arm_none_eabi(rule_name, version):
     """
     Add arm-none-eabi to your sysroot.
 
     Args:
         rule_name (str): The name of the rule.
-        platforms (dict): The platforms to add CMake to.
+        version (str): arm-none-eabi version from packages/arm.developer.com/gnu/arm-none-eabi
     """
-    checkout.add_platform_archive(
+    checkout_add_platform_archive(
         rule = {"name": rule_name},
-        platforms = platforms,
+        platforms = packages[version],
     )
 
+    checkout_add_asset(
+        "{}_toolchain-cmake".format(rule_name),
+        destination = "sysroot/cmake/arm-gnu-arm-none-eabi-toolchain.cmake",
+        content = _toolchain_contents,
+    )
 
-    checkout.add_asset(
-        rule = {"name": "{}_toolchain-cmake".format(rule_name)},
-        asset = {
-            "destination": "sysroot/cmake/arm-none-eabi-toolchain.cmake",
-            "content": _toolchain_contents,
+    checkout_update_env(
+        "{}_toolchain-cmake-env".format(rule_name),
+        vars = {
+            "ARM_GNU_TOOLCHAIN_CMAKE": "sysroot/cmake/arm-gnu-arm-none-eabi-toolchain.cmake",
         },
     )
-
-    checkout.update_env(
-        rule = {"name": "{}_toolchain-cmake-env".format(rule_name)},
-        env = {
-            "vars": {
-                "SYSROOT_ARM_NONE_EABI_TOOLCHAIN_CMAKE": "sysroot/cmake/arm-none-eabi-toolchain.cmake",
-            },
-            "paths": []
-        }
-    )
-

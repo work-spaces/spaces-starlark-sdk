@@ -28,6 +28,7 @@ def checkout_add_repo(
         },
     )
 
+
 def checkout_add_archive(
         name,
         url,
@@ -80,6 +81,32 @@ def checkout_add_asset(
         asset = {
             "content": content,
             "destination": destination,
+        },
+    )
+
+def checkout_update_asset(
+    name,
+    destination,
+    format = None,
+    value):
+    """
+    Updates an asset in the workspace.
+
+    Args:
+        name (str): The name of the rule.
+        destination (str): The destination path for the asset.
+        format (str): The format of the asset (json | toml | yaml). Default will get extension from destination.
+        value (str): The value of the asset.
+    """
+
+    effective_format = format if format != None else destination.split(".")[-1]
+
+    checkout.update_asset(
+        rule = {"name": name},
+        asset = {
+            "destination": destination,
+            "format": effective_format,
+            "value": value,
         },
     )
 
@@ -158,7 +185,8 @@ def checkout_add_platform_archive(
 def checkout_update_env(
         name,
         vars = {},
-        paths = []):
+        paths = [],
+        system_paths = None):
     """
     Updates the environment with the given variables and paths.
 
@@ -166,6 +194,7 @@ def checkout_update_env(
         name (str): The name of the rule.
         vars (dict): Dictionary of environment variables to set.
         paths (list): List of paths to add to the PATH.
+        system_paths (str): The path to add to the system PATH.
     """
 
     checkout.update_env(
@@ -173,6 +202,7 @@ def checkout_update_env(
         env = {
             "paths": paths,
             "vars": vars,
+            "system_paths": system_paths,
         },
     )
 

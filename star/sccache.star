@@ -2,31 +2,28 @@
 Add sccache to the workspace
 """
 
-def add_sccache(rule_name, sccache_version):
+load("checkout.star", "checkout_update_asset", "checkout_add_cargo_bin")
+
+def sccache_add(name, version):
     """
     Add sccache to the workspace and to .cargo/config.toml
 
     Args:
-        rule_name (str): The name of the rule.
-        sccache_version (str): The version of sccache to add.
+        name (str): The name of the rule.
+        version (str): The version of sccache to add.
     """
 
-    checkout.add_cargo_bin(
-        rule = {"name": "sccache"},
-        cargo_bin = {
-            "crate": "sccache",
-            "version": sccache_version,
-            "bins": ["sccache"],
-        },
+    checkout_add_cargo_bin(
+        "{}_sccache_cargo_bin".format(name),
+        crate = "sccache",
+        version = version,
+        bins = ["sccache"],
     )
 
-    checkout.update_asset(
-        rule = {"name": "{}_cargo_config".format(rule_name)},
-        asset = {
-            "destination": ".cargo/config.toml",
-            "format": "toml",
-            "value": {
-                "build": {"rustc-wrapper": "sccache"},
-            },
+    checkout_update_asset(
+        "{}_cargo_config".format(rule_name),
+        destination = ".cargo/config.toml",
+        value = {
+            "build": {"rustc-wrapper": "sccache"},
         },
     )

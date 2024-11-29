@@ -11,7 +11,7 @@ Usage Example:
 
 load("star/internal/gh-releases.star", "gh_releases")
 load("star/internal/add-gh-platform-archive.star", "add_gh_platform_archive")
-
+load("star/internal/update-packages.star",  "update_packages")
 load("star/internal/http-releases.star", "http_releases")
 load("star/internal/add-http-platform-archive.star", "add_http_platform_archive")
 
@@ -68,3 +68,4 @@ def check_http_latest():
 
 check_gh_latest()
 check_http_latest()
+update_packages()
