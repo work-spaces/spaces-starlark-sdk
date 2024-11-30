@@ -58,5 +58,5 @@ def run_add_target(
         platforms (list): List of platforms to build the target for (default is all).
     """
     run.add_target(
-        rule = {"name": name, "deps": deps, platforms: platforms},
+        rule = {"name": name, "deps": deps, "platforms": platforms},
     )
