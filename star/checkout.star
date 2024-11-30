@@ -226,30 +226,6 @@ def checkout_add_which_asset(
         },
     )
 
-def checkout_update_asset(
-        name,
-        destination,
-        format,
-        value):
-    """
-    Updates an asset in the workspace.
-
-    Args:
-        name (str): The name of the rule.
-        destination (str): The destination path for the asset.
-        format (str): The format of the asset.
-        value (str): The value of the asset.
-    """
-
-    checkout.update_asset(
-        rule = {"name": name},
-        asset = {
-            "destination": destination,
-            "format": format,
-            "value": value,
-        },
-    )
-
 def update_platforms_prefix(
         platforms,
         add_prefix):
