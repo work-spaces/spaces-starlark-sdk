@@ -55,6 +55,7 @@ def gnu_add_configure_make_install(
         args = ["-p", build_dir],
     )
 
+    autoreconf_deps =[]
     if autoreconf_args:
         run_add_exec(
             autoreconf_rule_name,
@@ -65,18 +66,11 @@ def gnu_add_configure_make_install(
             working_directory = source_directory,
             help = "Autoreconf {}".format(name),
         )
-    else:
-        run_add_exec(
-            autoreconf_rule_name,
-            deps = [prepare_rule_name],
-            command = "autoreconf",
-            args = ["--version"],
-            help = "Autoreconf {} (no-op)".format(name),
-        )
+        autoreconf_deps = [autoreconf_rule_name]
 
     run_add_exec(
         configure_rule_name,
-        deps = [autoreconf_rule_name] + deps,
+        deps = autoreconf_deps + deps,
         inputs = ["+{}/configure".format(source_directory)],
         command = "../../{}/configure".format(source_directory),
         args = [prefix_arg] + configure_args,
