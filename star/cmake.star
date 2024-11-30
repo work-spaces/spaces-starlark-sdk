@@ -75,7 +75,8 @@ def cmake_add_configure_build_install(
     install_rule_name = "{}_install".format(rule_name)
     workspace = info.get_absolute_path_to_workspace()
     install_path = "{}/build/install".format(workspace)
-    prefix_arg = "-DCMAKE_INSTALL_PREFIX={}".format(install_path)
+    install_prefix_arg = "-DCMAKE_INSTALL_PREFIX={}".format(install_path)
+    prefix_arg = "-DCMAKE_PREFIX_PATH={}:{}/sysroot".format(install_path, workspace)
     working_directory = "build/{}".format(rule_name)
 
     run_add_exec(
@@ -88,6 +89,7 @@ def cmake_add_configure_build_install(
             "-{}/.git/**".format(source_directory),
         ],
         args = [
+            install_prefix_arg,
             prefix_arg,
             "-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=FALSE",
             "-B{}".format(working_directory),
