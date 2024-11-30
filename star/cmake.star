@@ -125,6 +125,19 @@ def cmake_add_repo(
         build_artifact_globs = [],
         checkout_submodules = False,
         deps = []):
+    """
+    Add a CMake project to the build
+
+    Args:
+        name: The name of the project
+        url: The URL of the repository
+        rev: The revision of the repository
+        configure_args: The arguments to pass to the configure script
+        build_args: The arguments to pass to the build command
+        build_artifact_globs: The globs to match when installing build artifacts
+        checkout_submodules: Whether to checkout submodules
+        deps: The dependencies of the project
+    """
     checkout_add_repo(
         name,
         url = url,
@@ -132,13 +145,16 @@ def cmake_add_repo(
         clone = "Shallow",
     )
 
+    submodule_rule = "{}_submodules".format(name)
+    submodule_deps = []
     if checkout_submodules:
         run_add_exec(
-            "{}_submodules".format(name),
+            submodule_rule,
             command = "git",
             args = ["submodule", "update", "--init", "--recursive"],
             working_directory = name,
         )
+        submodule_deps = [submodule_rule]
 
     cmake_add_configure_build_install(
         name,
@@ -146,7 +162,7 @@ def cmake_add_repo(
         configure_args = configure_args,
         build_args = build_args,
         build_artifact_globs = build_artifact_globs,
-        deps = deps,
+        deps = deps + submodule_deps,
     )
 
 def cmake_add_source_archive(
