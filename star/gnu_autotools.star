@@ -115,7 +115,7 @@ def gnu_add_source_archive(
         sha256 = sha256,
     )
 
-    autotools_add_configure_make_install(
+    gnu_add_configure_make_install(
         name,
         source_directory,
         configure_args = configure_args,
