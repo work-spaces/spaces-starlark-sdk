@@ -15,67 +15,6 @@ load(
     "//spaces-starlark-sdk/packages/github.com/packages.star",
     github_packages = "packages",
 )
-load("//spaces-starlark-sdk/star/autotools.star", "autotools_add_source_archive")
-
-def gnu_add_autotools_from_source():
-    """
-    Add the autotools from source
-    """
-
-    autoconf_version = "2.72"
-    autoconf_sha256 = "ba885c1319578d6c94d46e9b0dceb4014caafe2490e437a0dbca3f270a223f5a"
-    automake_version = "1.17"
-    automake_sha256 = "8920c1fc411e13b90bf704ef9db6f29d540e76d232cb3b2c9f4dc4cc599bd990"
-    libtool_version = "2.5.4"
-    libtool_sha256 = "f81f5860666b0bc7d84baddefa60d1cb9fa6fceb2398cc3baca6afaa60266675"
-
-    workspace = info.get_absolute_path_to_workspace()
-    install_path = "{}/build/install/autotools".format(workspace)
-    prefix_arg = "--prefix={}".format(install_path)
-
-    checkout_add_platform_archive(
-        "m4-1",
-        platforms = github_packages["xpack-dev-tools"]["m4-xpack"]["v1.4.19-3"],
-    )
-
-    checkout_add_platform_archive(
-        "spaces0",
-        platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
-    )
-
-    autotools_add_source_archive(
-        "autoconf",
-        url = "https://ftp.gnu.org/gnu/autoconf/autoconf-{}.tar.xz".format(autoconf_version),
-        sha256 = autoconf_sha256,
-        source_directory = "autoconf-{}".format(autoconf_version),
-        configure_args = [prefix_arg],
-    )
-
-    autotools_add_source_archive(
-        "automake",
-        url = "https://ftp.gnu.org/gnu/automake/automake-{}.tar.xz".format(automake_version),
-        sha256 = automake_sha256,
-        source_directory = "automake-{}".format(automake_version),
-        deps = ["autoconf_install"],
-        configure_args = [prefix_arg],
-    )
-
-    autotools_add_source_archive(
-        "libtool",
-        url = "https://ftp.gnu.org/gnu/libtool/libtool-{}.tar.xz".format(libtool_version),
-        sha256 = libtool_sha256,
-        source_directory = "libtool-{}".format(libtool_version),
-        deps = ["autoconf_install"],
-        configure_args = [prefix_arg],
-    )
-
-    checkout_update_env(
-        "gnu_autotools_update_build_env",
-        paths = ["{}/bin".format(install_path)],
-    )
-    run_add_target("gnu_autotools_from_source", deps = ["autoconf_install", "automake_install", "libtool_install"])
-
-
 
 
 def gnu_add_configure_make_install(
@@ -206,3 +145,61 @@ def gnu_add_repo(
         make_args = make_args,
         deps = deps,
     )
+
+def gnu_add_autotools_from_source():
+    """
+    Add the autotools from source
+    """
+
+    autoconf_version = "2.72"
+    autoconf_sha256 = "ba885c1319578d6c94d46e9b0dceb4014caafe2490e437a0dbca3f270a223f5a"
+    automake_version = "1.17"
+    automake_sha256 = "8920c1fc411e13b90bf704ef9db6f29d540e76d232cb3b2c9f4dc4cc599bd990"
+    libtool_version = "2.5.4"
+    libtool_sha256 = "f81f5860666b0bc7d84baddefa60d1cb9fa6fceb2398cc3baca6afaa60266675"
+
+    workspace = info.get_absolute_path_to_workspace()
+    install_path = "{}/build/install/autotools".format(workspace)
+    prefix_arg = "--prefix={}".format(install_path)
+
+    checkout_add_platform_archive(
+        "m4-1",
+        platforms = github_packages["xpack-dev-tools"]["m4-xpack"]["v1.4.19-3"],
+    )
+
+    checkout_add_platform_archive(
+        "spaces0",
+        platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
+    )
+
+    gnu_add_source_archive(
+        "autoconf",
+        url = "https://ftp.gnu.org/gnu/autoconf/autoconf-{}.tar.xz".format(autoconf_version),
+        sha256 = autoconf_sha256,
+        source_directory = "autoconf-{}".format(autoconf_version),
+        configure_args = [prefix_arg],
+    )
+
+    gnu_add_source_archive(
+        "automake",
+        url = "https://ftp.gnu.org/gnu/automake/automake-{}.tar.xz".format(automake_version),
+        sha256 = automake_sha256,
+        source_directory = "automake-{}".format(automake_version),
+        deps = ["autoconf_install"],
+        configure_args = [prefix_arg],
+    )
+
+    gnu_add_source_archive(
+        "libtool",
+        url = "https://ftp.gnu.org/gnu/libtool/libtool-{}.tar.xz".format(libtool_version),
+        sha256 = libtool_sha256,
+        source_directory = "libtool-{}".format(libtool_version),
+        deps = ["autoconf_install"],
+        configure_args = [prefix_arg],
+    )
+
+    checkout_update_env(
+        "gnu_autotools_update_build_env",
+        paths = ["{}/bin".format(install_path)],
+    )
+    run_add_target("gnu_autotools_from_source", deps = ["autoconf_install", "automake_install", "libtool_install"])
