@@ -135,6 +135,7 @@ def gnu_add_source_archive(
     gnu_add_configure_make_install(
         name,
         source_directory,
+        autoreconf_args = autoreconf_args,
         configure_args = configure_args,
         make_args = make_args,
         deps = deps,
@@ -168,6 +169,7 @@ def gnu_add_repo(
     gnu_add_configure_make_install(
         name,
         source_directory = name,
+        autoreconf_args = autoreconf_args,
         configure_args = configure_args,
         make_args = make_args,
         deps = deps,
