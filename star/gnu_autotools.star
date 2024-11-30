@@ -151,6 +151,19 @@ def gnu_add_repo(
         make_args = [],
         checkout_submodules = False,
         deps = []):
+    """
+    Add an autotools project from a repository
+
+    Args:
+        name: The name of the project
+        url: The URL of the repository
+        rev: The revision of the repository
+        autoreconf_args: The arguments to pass to the autoreconf script
+        configure_args: The arguments to pass to the configure script
+        make_args: The arguments to pass to the make
+        checkout_submodules: Whether to checkout submodules
+        deps: The dependencies of the project
+    """
     checkout_add_repo(
         name,
         url = url,
@@ -158,6 +171,8 @@ def gnu_add_repo(
         clone = "Shallow",
     )
 
+    submodule_rule = "{}_submodules".format(name)
+    submodule_deps = []
     if checkout_submodules:
         run_add_exec(
             "{}_submodules".format(name),
@@ -165,6 +180,7 @@ def gnu_add_repo(
             args = ["submodule", "update", "--init", "--recursive"],
             working_directory = name,
         )
+        submodule_deps = [submodule_rule]
 
     gnu_add_configure_make_install(
         name,
@@ -172,7 +188,7 @@ def gnu_add_repo(
         autoreconf_args = autoreconf_args,
         configure_args = configure_args,
         make_args = make_args,
-        deps = deps,
+        deps = deps + submodule_deps,
     )
 
 def gnu_add_autotools_from_source():
