@@ -10,7 +10,7 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("run.star", "run_add_exec")
+load("run.star", "run_add_exec", "run_add_target")
 load(
     "//spaces-starlark-sdk/packages/github.com/packages.star",
     github_packages = "packages",
