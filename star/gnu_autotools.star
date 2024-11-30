@@ -61,6 +61,7 @@ def gnu_add_configure_make_install(
             deps = [prepare_rule_name],
             inputs = ["+{}/configure.ac".format(source_directory)],
             command = "autoreconf",
+            deps = deps,
             args = autoreconf_args,
             working_directory = source_directory,
             help = "autoreconf {}".format(name),
