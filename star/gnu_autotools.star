@@ -20,6 +20,7 @@ load(
 def gnu_add_configure_make_install(
         name,
         source_directory,
+        autoreconf_args = None,
         configure_args = [],
         make_args = [],
         build_artifact_globs = [],
@@ -30,6 +31,7 @@ def gnu_add_configure_make_install(
     Args:
         name: The name of the project
         source_directory: The directory of the project
+        autoreconf_args: The arguments to pass to the autoreconf script
         configure_args: The arguments to pass to the configure script
         make_args: The arguments to pass to the make command
         build_artifact_globs: The globs to match the build artifacts
@@ -38,6 +40,7 @@ def gnu_add_configure_make_install(
 
     build_dir = "build/{}".format(name)
     prepare_rule_name = "{}_prepare".format(name)
+    autoreconf_rule_name = "{}_autoreconf".format(name)
     configure_rule_name = "{}_configure".format(name)
     build_rule_name = "{}_build".format(name)
     install_rule_name = "{}_install".format(name)
@@ -52,9 +55,28 @@ def gnu_add_configure_make_install(
         args = ["-p", build_dir],
     )
 
+    if autoreconf_args:
+        run_add_exec(
+            autoreconf_rule_name,
+            deps = [prepare_rule_name],
+            inputs = ["+{}/configure.ac".format(source_directory)],
+            command = "autoreconf",
+            args = autoreconf_args,
+            working_directory = source_directory,
+            help = "Autoreconf {}".format(name),
+        )
+    else:
+        run_add_exec(
+            autoreconf_rule_name,
+            deps = [prepare_rule_name],
+            command = "autoreconf",
+            args = ["--version"],
+            help = "Autoreconf {} (no-op)".format(name),
+        )
+
     run_add_exec(
         configure_rule_name,
-        deps = [prepare_rule_name] + deps,
+        deps = [autoreconf_rule_name] + deps,
         inputs = ["+{}/configure".format(source_directory)],
         command = "../../{}/configure".format(source_directory),
         args = [prefix_arg] + configure_args,
@@ -91,6 +113,7 @@ def gnu_add_source_archive(
         url,
         sha256,
         source_directory,
+        autoreconf_args = None,
         configure_args = [],
         make_args = [],
         build_artifact_globs = [],
@@ -103,6 +126,7 @@ def gnu_add_source_archive(
         url: The URL of the archive
         sha256: The SHA256 of the archive
         source_directory: The directory of the project
+        autoreconf_args: The arguments to pass to the autoreconf script
         configure_args: The arguments to pass to the configure script
         make_args: The arguments to pass to the make
         build_artifact_globs: The globs to match the build artifacts
@@ -128,8 +152,10 @@ def gnu_add_repo(
         name,
         url,
         rev,
+        autoreconf_args = None,
         configure_args = [],
         make_args = [],
+        checkout_submodules = False,
         deps = []):
     checkout_add_repo(
         name,
@@ -137,6 +163,14 @@ def gnu_add_repo(
         rev = rev,
         clone = "Shallow",
     )
+
+    if checkout_submodules:
+        run_add_exec(
+            "{}_submodules".format(name),
+            command = "git",
+            args = ["submodule", "update", "--init", "--recursive"],
+            working_directory = name,
+        )
 
     gnu_add_configure_make_install(
         name,
