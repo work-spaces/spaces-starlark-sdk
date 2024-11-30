@@ -138,7 +138,7 @@ def gnu_add_repo(
         clone = "Shallow",
     )
 
-    autotools_add_configure_make_install(
+    gnu_add_configure_make_install(
         name,
         source_directory = name,
         configure_args = configure_args,
