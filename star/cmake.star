@@ -123,6 +123,7 @@ def cmake_add_repo(
         configure_args = [],
         build_args = [],
         build_artifact_globs = [],
+        checkout_submodules = False,
         deps = []):
     checkout_add_repo(
         name,
@@ -130,6 +131,14 @@ def cmake_add_repo(
         rev = rev,
         clone = "Shallow",
     )
+
+    if checkout_submodules:
+        run_add_exec(
+            "{}_submodules".format(name),
+            command = "git",
+            args = ["submodule", "update", "--init", "--recursive"],
+            working_directory = name,
+        )
 
     cmake_add_configure_build_install(
         name,
