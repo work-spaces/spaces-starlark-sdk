@@ -58,10 +58,9 @@ def gnu_add_configure_make_install(
     if autoreconf_args:
         run_add_exec(
             autoreconf_rule_name,
-            deps = [prepare_rule_name],
+            deps = [prepare_rule_name] + deps,
             inputs = ["+{}/configure.ac".format(source_directory)],
             command = "autoreconf",
-            deps = deps,
             args = autoreconf_args,
             working_directory = source_directory,
             help = "autoreconf {}".format(name),
