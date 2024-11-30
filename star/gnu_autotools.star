@@ -54,7 +54,7 @@ def gnu_add_configure_make_install(
         args = ["-p", build_dir],
     )
 
-    autoreconf_deps = []
+    autoreconf_deps = [prepare_rule_name]
     if autoreconf_args:
         run_add_exec(
             autoreconf_rule_name,
