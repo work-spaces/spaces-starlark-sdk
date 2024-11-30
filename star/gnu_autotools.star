@@ -16,7 +16,6 @@ load(
     github_packages = "packages",
 )
 
-
 def gnu_add_configure_make_install(
         name,
         source_directory,
@@ -55,7 +54,7 @@ def gnu_add_configure_make_install(
         args = ["-p", build_dir],
     )
 
-    autoreconf_deps =[]
+    autoreconf_deps = []
     if autoreconf_args:
         run_add_exec(
             autoreconf_rule_name,
@@ -64,7 +63,7 @@ def gnu_add_configure_make_install(
             command = "autoreconf",
             args = autoreconf_args,
             working_directory = source_directory,
-            help = "Autoreconf {}".format(name),
+            help = "autoreconf {}".format(name),
         )
         autoreconf_deps = [autoreconf_rule_name]
 
