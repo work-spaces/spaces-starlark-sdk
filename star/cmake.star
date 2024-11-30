@@ -2,7 +2,7 @@
 Add CMake to your sysroot.
 """
 
-load("packages/github.com/Kitware/CMake/packages.star", "packages")
+load("../packages/github.com/Kitware/CMake/packages.star", "packages")
 load("checkout.star", "checkout_add_archive", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_asset")
 load("run.star", "run_add_exec")
 
