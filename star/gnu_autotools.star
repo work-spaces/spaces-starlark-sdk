@@ -73,6 +73,10 @@ def gnu_add_autotools_from_source():
         "gnu_autotools_update_build_env",
         paths = ["{}/bin".format(install_path)],
     )
+    run_add_target("gnu_autotools_from_source", deps = ["autoconf_install", "automake_install", "libtool_install"])
+
+
+
 
 def gnu_add_configure_make_install(
         name,
