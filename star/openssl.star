@@ -75,13 +75,14 @@ def openssl_build(
 def openssl_add(
         name,
         tag,
+        url = "https://github.com/openssl/openssl",
         configure_args = [],
         make_args = [],
         deps = []):
     # Download source for OpenSSL
     checkout_add_repo(
         name,
-        url = "https://github.com/openssl/openssl",
+        url = url,
         rev = tag,
         clone = "Shallow",
     )
