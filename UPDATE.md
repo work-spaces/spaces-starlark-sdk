@@ -8,4 +8,3 @@ To check for new releases, run:
 ```
 
 This script will only grab the latest release. Use `add-gh-platform-archive.star` to update specific releases.
-
